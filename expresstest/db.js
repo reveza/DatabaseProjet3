@@ -10,13 +10,27 @@ function initDb(callback) {
     _db.serialize(function() {
 
         _db.run('CREATE TABLE lorem (info TEXT)');
-        var stmt = _db.prepare('INSERT INTO lorem VALUES (?)');
-      
+
+        var stmt = _db.prepare(
+            'INSERT INTO lorem VALUES (?)');
+
         for (var i = 0; i < 10; i++) {
           stmt.run('Ipsum ' + i);
         }
-      
+
         stmt.finalize();
+
+        _db.run('CREATE TABLE branch ('+
+        'location TEXT,city TEXT,PRIMARY KEY(location, city))');
+
+        _db.run('INSERT INTO branch (location, city) '
+        + 'VALUES '
+        + '("Kerrisdale", "Vancouver"),'
+        + '("Kitsilano", "Vancouver"),'
+        + '("Downtown", "Vancouver"),'
+        + '("Metrotown", "Burnaby"),'
+        + '("SFU", "Burnaby"), '
+        + '("Central Park", "Burnaby")');
       });
 }
 
@@ -25,7 +39,7 @@ function getDb() {
         console.warn("Db has not been initialized. Please called init first.");
         return null;
     }
-    
+
     return _db;
 }
 

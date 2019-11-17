@@ -2,12 +2,13 @@ var express = require('express');
 var router = express.Router();
 let db = require('../db').getDb;
 
-/* GET users listing. */
+/* GET branch listing. */
 router.get('/', function(req, res, next) {
-  db().all('SELECT rowid AS id, info FROM lorem', function(err, rows) {
+  db().all('SELECT * FROM branch', function(err, rows) {
     let result = {};
     rows.forEach((row) => {
-      result += '{' + row.id + ': ' + row.info + '}';
+      console.log("TEST",row);
+      result += '{' + row.location + ',' + row.city + '}, ';
     });
 
     res.send(result);
