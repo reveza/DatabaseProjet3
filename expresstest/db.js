@@ -42,6 +42,29 @@ function initDb(callback) {
 
         _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY NOT NULL, date REAL, time REAL, odometer REAL' +
         ', fulltank REAL, value REAL, FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE CASCADE ON UPDATE NO ACTION)');
+
+        _db.run('CREATE TABLE lorem (info TEXT)');
+
+        var stmt = _db.prepare(
+            'INSERT INTO lorem VALUES (?)');
+
+        for (var i = 0; i < 10; i++) {
+          stmt.run('Ipsum ' + i);
+        }
+
+        stmt.finalize();
+
+        _db.run('CREATE TABLE branch ('+
+        'location TEXT,city TEXT,PRIMARY KEY(location, city))');
+
+        _db.run('INSERT INTO branch (location, city) '
+        + 'VALUES '
+        + '("Kerrisdale", "Vancouver"),'
+        + '("Kitsilano", "Vancouver"),'
+        + '("Downtown", "Vancouver"),'
+        + '("Metrotown", "Burnaby"),'
+        + '("SFU", "Burnaby"), '
+        + '("Central Park", "Burnaby")');
       });
 }
 
@@ -50,7 +73,7 @@ function getDb() {
         console.warn("Db has not been initialized. Please called init first.");
         return null;
     }
-    
+
     return _db;
 }
 

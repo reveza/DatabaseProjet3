@@ -11,10 +11,10 @@ class Customer extends Component {
 
     getResponse = async() => {
         const response = await fetch('/users', {
-            headers : {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }});
+          headers : {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }});
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
 

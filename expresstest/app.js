@@ -8,7 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var rentalsRouter = require('./routes/rentals');
 var returnsRouter = require('./routes/returns');
-
+var branchRouter = require('./routes/branch');
 
 var app = express();
 var initDb = require('./db').initDb;
@@ -29,6 +29,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rentals', rentalsRouter);
 app.use('/returns', returnsRouter);
+app.use('/branch', branchRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
