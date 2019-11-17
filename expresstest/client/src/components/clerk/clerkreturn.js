@@ -14,9 +14,8 @@ class ClerkReturn extends Component {
             value: null,
             error: "no err",
             showError: false,
-            open: true
+            closed: true
         }
-        this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
     }
 
@@ -34,6 +33,7 @@ class ClerkReturn extends Component {
             this.setState({error: res.data});
             this.setState({showError: true});
         });
+        this.setState({closed: false});
     }
 
     handleInputChange = (event) => {    
@@ -41,23 +41,24 @@ class ClerkReturn extends Component {
             [event.target.name]: event.target.value
         })
     }
-
-    handleOpen() {
-        this.setState({open: true});
-    }
     
     handleClose() {
-        this.setState({open: false});
         this.setState({showError: false});
+        this.setState({closed: true})
     }
 
     render () {
         const showError = this.state.showError;
+        const closed = this.state.closed;
         return (
             <div>
                 <h5>Return a vehicle</h5>
                 <form onSubmit={this.handleSubmit}>
-                    {showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>} 
+                    {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>} 
+                    {!closed && !showError && 
+                    <div>Return was made for RentId {this.state.rid}, Date {this.state.date}, Time {this.state.time},
+                    Odometer {this.state.odometer}, FullTank {this.state.fullTank} and Value {this.state.value}
+                    <button onClick={this.handleClose}>X</button></div>}
                     <p><input type='text' placeholder='Rent ID' name='rid' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='Date' name='date' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='Time' name='time' onChange={this.handleInputChange}/></p>
