@@ -18,7 +18,7 @@ function initDb(callback) {
 
         _db.run('CREATE TABLE if not exists lorem (info TEXT)');
         var stmt = _db.prepare('INSERT INTO lorem VALUES (?);');
-      
+
         for (var i = 0; i < 10; i++) {
           stmt.run('Ipsum ' + i);
         }
@@ -30,8 +30,8 @@ function initDb(callback) {
             'cellphone REAL, ' +
             'fromDate REAL, ' +
             'fromTime REAL, ' +
-            'toDate REAL, ' + 
-            'toTime REAL, ' + 
+            'toDate REAL, ' +
+            'toTime REAL, ' +
             'odometer REAL, ' +
             'cardName TEXT, ' +
             'cardNo REAL, ' +
@@ -43,17 +43,58 @@ function initDb(callback) {
         _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY NOT NULL, date REAL, time REAL, odometer REAL' +
         ', fulltank REAL, value REAL, FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE CASCADE ON UPDATE NO ACTION)');
 
-        // _db.run('CREATE TABLE if not exists branch ('+
-        // 'location TEXT,city TEXT,PRIMARY KEY(location, city))');
+        _db.run('CREATE TABLE if not exists branch ('+
+        'location TEXT,city TEXT,PRIMARY KEY(location, city))');
 
-        // _db.run('INSERT INTO branch (location, city) '
-        // + 'VALUES '
-        // + '("Kerrisdale", "Vancouver"),'
-        // + '("Kitsilano", "Vancouver"),'
-        // + '("Downtown", "Vancouver"),'
-        // + '("Metrotown", "Burnaby"),'
-        // + '("SFU", "Burnaby"), '
-        // + '("Central Park", "Burnaby")');
+        _db.run('CREATE TABLE if not exists vehicletype ('+
+        'vtname TEXT PRIMARY KEY, features TEXT, wrate REAL, drate REAL, '
+        + 'hrate REAL, wirate REAL, dirate REAL, hirate REAL, krate REAL)');
+
+        _db.run('CREATE TABLE if not exists vehicle ('+
+        'vid INTEGER, vlicense TEXT, make TEXT, model TEXT, year INTEGER, color TEXT, odometer REAL, status TEXT, ' +
+        'vtname TEXT, location TEXT, city TEXT, PRIMARY KEY(vid), FOREIGN KEY(location, city) REFERENCES branch(location, city) ' +
+        'ON DELETE CASCADE ON UPDATE NO ACTION, FOREIGN KEY(vtname) REFERENCES vehicletype(vtname) ON DELETE CASCADE ON UPDATE NO ACTION)');
+
+        _db.run('INSERT INTO branch (location, city) '
+        + 'VALUES '
+        + '("Kerrisdale", "Vancouver"),'
+        + '("Kitsilano", "Vancouver"),'
+        + '("Downtown", "Vancouver"),'
+        + '("Metrotown", "Burnaby"),'
+        + '("SFU", "Burnaby"), '
+        + '("Central Park", "Burnaby")');
+
+        _db.run('INSERT INTO vehicletype (vtname, features, wrate, drate, hrate, wirate, dirate, hirate, krate) '
+        + 'VALUES '
+        + '("Economy", "GPS", 150, 40, 8, 12, 4, 1, 1), '
+        + '("Compact", "GPS", 150.00, 40.00, 8.00, 12.00, 4.00, 1.00, 0.50),' +
+        '("Mid-size", "GPS", 200.00, 50.00, 10.00, 15.00, 5.00, 1.00, 0.50),' +
+        '("Standard", "GPS", 200.00, 50.00, 10.00, 15.00, 5.00, 1.00, 0.50),' +
+        '("Full-size", "GPS", 250.00, 60.00, 20.00, 15.00, 5.00, 1.00, 0.50),' +
+        '("SUV", "GPS & Bluetooth", 400.00, 80.00, 20.00, 30.00, 10.00, 3.00, 1.00),' +
+        '("Truck", "GPS & Radio", 375.00, 80.00, 20.00, 30.00, 10.00, 3.00, 1.00)');
+
+        _db.run('INSERT INTO vehicle (vid, vlicense, make, model, year, color, ' +
+        'odometer, status, vtname, location, city) VALUES ' +
+        // '(1, "HELLO", "BMW", "X5", 2019, "White", 10, "for_sale", "Standard", "Kerrisdale", "Vancouver"), ' +
+        // '(11, "AB123C", "BMW", "X6", 2019, "Black", 10, "for_rent", "Standard", "Kerrisdale", "Vancouver"), ' +
+        // '(304, "CS304", "Mercedes", "ML", 2019, "Black", 10, "for_rent", "SUV", "Kitsilano", "Vancouver"), ' +
+        // '(12345, "B75J2L", "Mercedes", "GLE", 2019, "Black", 15, "for_rent", "SUV", "Downtown", "Vancouver"), ' +
+        // '(12342, "PK923D", "Range Rover", "Velar", 2018, "White", 10, "for_rent", "SUV", "Downtown", "Vancouver"), ' +
+        // '(99, "VS25T3", "Mazda", "3", 2018, "Black", 20, "for_rent", "Compact", "Metrotown", "Vancouver"), ' +
+        // '(25, "1L023C", "BMW", "X6", 2019, "Black", 10, "for_sale", "Standard", "Metrotown", "Vancouver"), ' +
+        // '(23, "291023", "Nissan", "Versa Note", 2010, "Red", 90, "for_rent", "Economy", "Metrotown", "Burnaby"), ' +
+        // '(9, "L02343", "Nissan", "Versa Note", 2010, "Silver", 100, "for_rent", "Economy", "Metrotown", "Burnaby"), ' +
+        // '(15, "98ASKW", "Chevrolet", "Malibu", 2015, "White", 50, "for_sale", "Mid-size", "Kerrisdale", "Vancouver"), ' +
+        // '(20, "02N23", "BMW", "X6", 2019, "Black", 100, "for_rent", "Standard", "SFU", "Burnaby"), ' +
+        '(21, "9OUHWM", "Chevrolet", "Malibu", 2015, "White", 100, "for_sale", "Mid-size", "Kerrisdale", "Vancouver"), ' +
+        '(2020, "IU692C", "Kia", "Optima", 2008, "Black", 120, "for_rent", "Mid-size", "SFU", "Burnaby"), ' +
+        '(88, "I23LO8", "Kia", "Optima", 2008, "Black", 110, "for_rent", "Mid-size", "Central Park", "Burnaby"), ' +
+        '(77, "91B9JS", "Toyota", "Camry", 2009, "White", 100, "for_rent", "Full-size", "Kerrisdale", "Vancouver"), ' +
+        '(1010, "LIASN2", "BMW", "X6", 2019, "Black", 120, "for_rent", "Standard", "Kerrisdale", "Vancouver"), ' +
+        '(998, "MIA10S", "Toyota", "Camry", 2010, "Red", 100, "for_rent", "Full-size", "Central Park", "Burnaby"), ' +
+        '(200, "398BCS", "Nissan", "Titan", 2001, "White", 120, "for_rent", "Truck", "Kerrisdale", "Vancouver"), ' +
+        '(1200, "917H23", "Nissan", "Titan", 2001, "Red", 120, "for_rent", "Truck", "Metrotown", "Burnaby")');
       });
 }
 
