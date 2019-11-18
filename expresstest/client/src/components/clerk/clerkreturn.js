@@ -7,9 +7,9 @@ class ClerkReturn extends Component {
         this.state = {
             rid: null,
             date: null,
-            time: null, 
-            odometer: null, 
-            fullTank: null, 
+            time: null,
+            odometer: null,
+            fullTank: null,
             value: null,
             error: "no err",
             showError: false,
@@ -22,11 +22,14 @@ class ClerkReturn extends Component {
         this.setState({error: "no err"});
         event.preventDefault();
         const data = this.state;
-        axios.post('/returns', data, {
-            headers : {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }})
+        axios.post('/returns', data,
+        // {
+        //     headers : {
+        //       'Content-Type': 'application/json',
+        //       'Accept': 'application/json'
+        //     }
+          // }
+        )
         .then( res => {
             console.log(res);
             this.setState({error: res.data});
@@ -35,12 +38,12 @@ class ClerkReturn extends Component {
         this.setState({closed: false});
     }
 
-    handleInputChange = (event) => {    
+    handleInputChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         })
     }
-    
+
     handleClose() {
         this.setState({showError: false});
         this.setState({closed: true})
@@ -53,8 +56,8 @@ class ClerkReturn extends Component {
             <div>
                 <h5>Return a vehicle</h5>
                 <form onSubmit={this.handleSubmit}>
-                    {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>} 
-                    {!closed && !showError && 
+                    {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>}
+                    {!closed && !showError &&
                     <div>Return was made for RentId {this.state.rid}, Date {this.state.date}, Time {this.state.time},
                     Odometer {this.state.odometer}, FullTank {this.state.fullTank} and Value {this.state.value}
                     <button onClick={this.handleClose}>X</button></div>}

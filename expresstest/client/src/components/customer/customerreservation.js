@@ -24,11 +24,14 @@ class CustomerReservation extends Component {
         this.state.error = "no err";
         event.preventDefault();
         const data = this.state;
-        axios.post('/reservation', data, {
-            headers : {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }})
+        axios.post('/reservation', data,
+        // {
+        //     headers : {
+        //       'Content-Type': 'application/json',
+        //       'Accept': 'application/json'
+        //     }
+          // }
+        )
         .then( res => {
             console.log(res);
             this.setState({error: res.data});
@@ -66,8 +69,8 @@ class CustomerReservation extends Component {
                     <p><input type='text' placeholder='From Time' name='fromTime' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='From Date' name='fromDate' onChange={this.handleInputChange}/></p>
 
-                    <p><input type='text' placeholder='To Time' name='fromTime' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='To Date' name='fromDate' onChange={this.handleInputChange}/></p>
+                    <p><input type='text' placeholder='To Time' name='toTime' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='To Date' name='toDate' onChange={this.handleInputChange}/></p>
                     <p><button>Make a reservation</button></p>
                 </form>
             </div>

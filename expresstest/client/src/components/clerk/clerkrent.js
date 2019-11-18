@@ -7,13 +7,13 @@ class ClerkRent extends Component {
         this.state = {
             rid: null,
             vid: null,
-            cellphone: null, 
-            fromDate: null, 
-            fromTime: null, 
-            toDate: null, 
-            toTime: null, 
-            odometer: null, 
-            cardName: null, 
+            cellphone: null,
+            fromDate: null,
+            fromTime: null,
+            toDate: null,
+            toTime: null,
+            odometer: null,
+            cardName: null,
             cardNo: null,
             expDate: null,
             confNo: null
@@ -23,11 +23,14 @@ class ClerkRent extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const data = this.state;
-        axios.post('/rentals', data, {
-            headers : {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }})
+        axios.post('/rentals', data,
+        // {
+        //     headers : {
+        //       'Content-Type': 'application/json',
+        //       'Accept': 'application/json'
+        //     }
+          // }
+        )
         .then( res => {
             console.log(res);
         })
@@ -36,7 +39,7 @@ class ClerkRent extends Component {
         });
     }
 
-    handleInputChange = (event) => {    
+    handleInputChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         })
