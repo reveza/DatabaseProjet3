@@ -26,7 +26,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/rentals', rentalsRouter);
+app.use('/rentals/daily', rentalsRouter);
+app.use('/rentals/branch', rentalsRouter);
 app.use('/returns', returnsRouter);
+app.use('/returns/daily', returnsRouter);
+app.use('/returns/branch', returnsRouter);
 app.use('/branch', branchRouter);
 
 // catch 404 and forward to error handler

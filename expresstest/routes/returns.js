@@ -13,6 +13,14 @@ router.post('/', function(req, res, next) {
     });
 });
 
+router.post('/daily', function(req, res, next) {
+  // db().run();
+});
+
+router.post('/branch', function(req, res, next) {
+  // db().run();
+});
+
 router.get('/', function(req, res, next) {
   db().all('SELECT * FROM returns;', function(err, rows) {
     res.send(rows);

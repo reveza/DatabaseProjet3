@@ -43,7 +43,6 @@ class ClerkRent extends Component {
     }
 
     render () {
-        const {confirmationNumber} = this.state;
         return (
             <div>
                 <h5>Rent a vehicle</h5>
@@ -51,10 +50,10 @@ class ClerkRent extends Component {
                     <p><input type='text' placeholder='Reservation ID' name='rid' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='Vehicle ID' name='vid' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='Cellphone' name='cellphone' onChange={this.handleInputChange}/></p>
-                    <p><input type='text' placeholder='fromDate' name='fromDate' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='fromTime' name='fromTime' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='toDate' name='toDate' onChange={this.handleInputChange}/></p>
-                    <p><input type='text' placeholder='toTime' name='toTime' onChange={this.handleInputChange}/>
+                    <p><input type='text' placeholder='fromDate DD/MM/YYYY' name='fromDate' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='fromTime HH/MM' name='fromTime' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='toDate DD/MM/YYYY' name='toDate' onChange={this.handleInputChange}/></p>
+                    <p><input type='text' placeholder='toTime HH/MM' name='toTime' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='Odometer' name='odometer' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='cardName' name='cardName' onChange={this.handleInputChange}/></p>
                     <p><input type='text' placeholder='CardNumber' name='cardNo' onChange={this.handleInputChange}/>

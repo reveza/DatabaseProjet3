@@ -43,8 +43,8 @@ function initDb(callback) {
         _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY NOT NULL, date REAL, time REAL, odometer REAL' +
         ', fulltank REAL, value REAL, FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE CASCADE ON UPDATE NO ACTION)');
 
-        // _db.run('CREATE TABLE if not exists branch ('+
-        // 'location TEXT,city TEXT,PRIMARY KEY(location, city))');
+        _db.run('CREATE TABLE if not exists branch ('+
+        'location TEXT,city TEXT,PRIMARY KEY(location, city))');
 
         // _db.run('INSERT INTO branch (location, city) '
         // + 'VALUES '

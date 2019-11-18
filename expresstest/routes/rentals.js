@@ -20,4 +20,35 @@ router.get('/', function(req, res, next) {
   });
 });
 
+// Daily Rental Report
+router.post('/daily', function(req, res, next) {
+  let daily_vid = [];
+  let new_rental = 0;
+  const currentDate = new Date();
+  db().all('SELECT fromDate, toDate, vid FROM rentals;', function(err, rows) {
+    rows.forEach( row => {
+      var from_date = new Date(row.fromDate);
+      var to_date =  new Date(row.toDate);
+      
+      if (currentDate > from_date && currentDate < to_date ){
+        daily_vid += vid;
+      } else if (currentDate == from_date) {
+        //rental made today is considered a new rental
+        new_rental += 1;
+      }
+    });
+  });
+});
+
+// Daily Rental by Branch Report
+router.post('/branch', function(req, res, next) {
+  console.log("branch id", req.body.bid);
+  db().all('SELECT * FROM rentals;', function(err, rows) {
+    console.log("branch id", req.body.bid);
+    if (err) {
+      return console.log(err.message);
+    }
+  });
+});
+
 module.exports = router;
