@@ -11,6 +11,7 @@ var branchRouter = require('./routes/branch');
 var vehicletypeRouter = require('./routes/vehicletype');
 var vehicleRouter = require('./routes/vehicle');
 var reservationRouter = require('./routes/reservation');
+var customerRouter = require('./routes/customer');
 
 var app = express();
 var initDb = require('./db').initDb;
@@ -39,6 +40,7 @@ app.use('/branch', branchRouter);
 app.use('/vehicletype', vehicletypeRouter);
 app.use('/vehicle', vehicleRouter);
 app.use('/reservation', reservationRouter);
+app.use('/customer', customerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

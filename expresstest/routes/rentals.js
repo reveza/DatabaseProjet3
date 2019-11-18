@@ -29,7 +29,7 @@ router.post('/daily', function(req, res, next) {
     rows.forEach( row => {
       var from_date = new Date(row.fromDate);
       var to_date =  new Date(row.toDate);
-      
+
       if (currentDate > from_date && currentDate < to_date ){
         daily_vid += vid;
       } else if (currentDate == from_date) {
