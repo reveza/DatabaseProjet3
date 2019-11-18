@@ -6,7 +6,7 @@ let db = require('../db').getDb;
 router.post('/', function(req, res, next) {
   db().run(
     `INSERT INTO returns (rid, date, time, odometer, fullTank, value)` +
-    `VALUES (?, ?, ?, ?, ?, ?)`, [req.body.rid, req.body.date, req.body.time, req.body.odometer, req.body.fullTank, req.body.value], function(err) { 
+    `VALUES (?, ?, ?, ?, ?, ?)`, [req.body.rid, req.body.date, req.body.time, req.body.odometer, req.body.fullTank, req.body.value], function(err) {
       if (err) {
         res.send(err.message);
       }

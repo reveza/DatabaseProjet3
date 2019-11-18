@@ -43,6 +43,7 @@ function initDb(callback) {
         _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY NOT NULL, date REAL, time REAL, odometer REAL' +
         ', fulltank REAL, value REAL, FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE CASCADE ON UPDATE NO ACTION)');
 
+<<<<<<< Updated upstream
         _db.run('CREATE TABLE if not exists branch ('+
         'location TEXT,city TEXT,PRIMARY KEY(location, city))');
 
@@ -73,6 +74,25 @@ function initDb(callback) {
         '("Full-size", "GPS", 250.00, 60.00, 20.00, 15.00, 5.00, 1.00, 0.50),' +
         '("SUV", "GPS & Bluetooth", 400.00, 80.00, 20.00, 30.00, 10.00, 3.00, 1.00),' +
         '("Truck", "GPS & Radio", 375.00, 80.00, 20.00, 30.00, 10.00, 3.00, 1.00)');
+
+        _db.run('CREATE TABLE if not exists reservation ('+ 'confNo INTEGER PRIMARY KEY, '
+        + 'vtname TEXT, '
+        + 'cellphone TEXT, '
+        + 'fromDate TEXT, '
+        + 'fromTime TEXT, '
+        + 'toDate TEXT, '
+        + 'toTime TEXT, '
+        + 'FOREIGN KEY(vtname) REFERENCES vehicle_types(vtname)'
+        + 'ON DELETE SET NULL ON UPDATE CASCADE, '
+        + 'FOREIGN KEY(cellphone) REFERENCES customer(cellphone)'
+        + 'ON DELETE SET NULL ON UPDATE CASCADE, '
+        + 'FOREIGN KEY(fromDate,fromTime,toDate,toTime) REFERENCES '
+        + 'rent(fromDate,fromTime,toDate,toTime) '
+        + 'ON DELETE CASCADE ON UPDATE CASCADE)');
+
+        // _db.run('CREATE TABLE if not exists branch ('+
+        // 'location TEXT,city TEXT,PRIMARY KEY(location, city))');
+
 
         _db.run('INSERT INTO vehicle (vid, vlicense, make, model, year, color, ' +
         'odometer, status, vtname, location, city) VALUES ' +
