@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class ClerkReturn extends Component {
+class CustomerReservation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rid: null,
-            date: null,
-            time: null,
-            odometer: null,
-            fullTank: null,
-            value: null,
+            name: null,
+            vtname: null,
+            cellphone: null,
+            fromTime: null,
+            fromDate: null,
+            toTime: null,
+            toDate: null,
             error: "no err",
             showError: false,
             closed: true
@@ -19,10 +20,10 @@ class ClerkReturn extends Component {
     }
 
     handleSubmit = (event) => {
-        this.setState({error: "no err"});
+        this.setState({error:"no err"});
         event.preventDefault();
         const data = this.state;
-        axios.post('/returns', data,
+        axios.post('/reservation', data,
         // {
         //     headers : {
         //       'Content-Type': 'application/json',
@@ -54,24 +55,26 @@ class ClerkReturn extends Component {
         const closed = this.state.closed;
         return (
             <div>
-                <h5>Return a vehicle</h5>
+                <h5>Reserve a vehicle</h5>
                 <form onSubmit={this.handleSubmit}>
                     {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>}
                     {!closed && !showError &&
-                    <div>Return was made for RentId {this.state.rid}, Date {this.state.date}, Time {this.state.time},
-                    Odometer {this.state.odometer}, FullTank {this.state.fullTank} and Value {this.state.value}
+                    <div>Customer ({this.state.name}, {this.state.cellphone}) made a reservation
                     <button onClick={this.handleClose}>X</button></div>}
-                    <p><input type='text' placeholder='Rent ID' name='rid' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='Date DD/MM/YYY' name='date' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='Time HH/MM' name='time' onChange={this.handleInputChange}/></p>
-                    <p><input type='text' placeholder='Odometer' name='odometer' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='fullTank' name='fullTank' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='Value' name='value' onChange={this.handleInputChange}/></p>
-                    <p><button>Return Vehicle</button></p>
+                    <p><input type='text' placeholder='Name' name='name' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='Cellphone' name='cellphone' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='Vechicle Type' name='vtname' onChange={this.handleInputChange}/></p>
+
+                    <p><input type='text' placeholder='From Time' name='fromTime' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='From Date' name='fromDate' onChange={this.handleInputChange}/></p>
+
+                    <p><input type='text' placeholder='To Time' name='toTime' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='To Date' name='toDate' onChange={this.handleInputChange}/></p>
+                    <p><button>Make a reservation</button></p>
                 </form>
             </div>
         );
         }
 }
 
-export default ClerkReturn;
+export default CustomerReservation;

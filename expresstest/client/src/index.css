@@ -14,8 +14,21 @@ code {
 
 .flex {
   display: flex;
+  padding: 20px;
 }
 
 .flex-element {
   padding-right: 60px;
+}
+
+.json {
+  font-size: 12px;
+  text-align: left;
+}
+.text {
+  font-size: 12px;
+}
+
+.subtitle {
+  text-align: left;
 }

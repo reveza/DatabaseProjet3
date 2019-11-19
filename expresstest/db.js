@@ -16,32 +16,24 @@ function initDb(callback) {
             }
         });
 
-    //     _db.run('CREATE TABLE if not exists lorem (info TEXT)');
-    //     var stmt = _db.prepare('INSERT INTO lorem VALUES (?);');
+        // _db.run('CREATE TABLE if not exists rentals (' +
+        //     'rid INTEGER PRIMARY KEY, ' +
+        //     'vid REAL, ' +
+        //     'cellphone REAL, ' +
+        //     'fromDate REAL, ' +
+        //     'fromTime REAL, ' +
+        //     'toDate REAL, ' +
+        //     'toTime REAL, ' +
+        //     'odometer REAL, ' +
+        //     'cardName TEXT, ' +
+        //     'cardNo REAL, ' +
+        //     'expDate REAL, ' +
+        //     'confNo REAL, ' +
+        //     'FOREIGN KEY (cellphone) REFERENCES customer (cellphone) ON DELETE CASCADE ON UPDATE NO ACTION, '+
+        //     'FOREIGN KEY (confNo) REFERENCES reservation (confNo))');
 
-    //     for (var i = 0; i < 10; i++) {
-    //       stmt.run('Ipsum ' + i);
-    //     }
-    //     stmt.finalize();
-
-    //     _db.run('CREATE TABLE if not exists rentals (' +
-    //         'rid INTEGER PRIMARY KEY, ' +
-    //         'vid REAL, ' +
-    //         'cellphone REAL, ' +
-    //         'fromDate REAL, ' +
-    //         'fromTime REAL, ' +
-    //         'toDate REAL, ' +
-    //         'toTime REAL, ' +
-    //         'odometer REAL, ' +
-    //         'cardName TEXT, ' +
-    //         'cardNo REAL, ' +
-    //         'expDate REAL, ' +
-    //         'confNo REAL)');
-    //         // 'FOREIGN_KEY (cellphone) REFERENCES customers (cellphone) ON DELETE CASCADE ON UPDATE NO ACTION, '+
-    //         // 'FOREIGN_KEY (confNo) REFERENCES reservations (confNo)
-
-    //     _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY NOT NULL, date REAL, time REAL, odometer REAL' +
-    //     ', fulltank REAL, value REAL, FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE CASCADE ON UPDATE NO ACTION)');
+        // _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY NOT NULL, date REAL, time REAL, odometer REAL' +
+        // ', fulltank REAL, value REAL, FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE CASCADE ON UPDATE NO ACTION)');
 
         // _db.run('CREATE TABLE if not exists branch ('+
         // 'location TEXT,city TEXT,PRIMARY KEY(location, city))');
@@ -55,14 +47,33 @@ function initDb(callback) {
         // 'vtname TEXT, location TEXT, city TEXT, PRIMARY KEY(vid), FOREIGN KEY(location, city) REFERENCES branch(location, city) ' +
         // 'ON DELETE CASCADE ON UPDATE NO ACTION, FOREIGN KEY(vtname) REFERENCES vehicletype(vtname) ON DELETE CASCADE ON UPDATE NO ACTION)');
 
-    //     _db.run('INSERT INTO branch (location, city) '
-    //     + 'VALUES '
-    //     + '("Kerrisdale", "Vancouver"),'
-    //     + '("Kitsilano", "Vancouver"),'
-    //     + '("Downtown", "Vancouver"),'
-    //     + '("Metrotown", "Burnaby"),'
-    //     + '("SFU", "Burnaby"), '
-    //     + '("Central Park", "Burnaby")');
+        // _db.run('CREATE TABLE IF NOT EXISTS reservation ('
+        // + 'confNo INTEGER PRIMARY KEY, '
+        // + 'vtname TEXT, '
+        // + 'cellphone TEXT, '
+        // + 'fromDate TEXT, '
+        // + 'fromTime TEXT, '
+        // + 'toDate TEXT, '
+        // + 'toTime TEXT, '
+        // + 'FOREIGN KEY(vtname) REFERENCES vehicletype(vtname)'
+        // + 'ON DELETE SET NULL ON UPDATE CASCADE, '
+        // + 'FOREIGN KEY(cellphone) REFERENCES customer(cellphone)'
+        // + 'ON DELETE SET NULL ON UPDATE CASCADE, '
+        // + 'FOREIGN KEY(fromDate,fromTime,toDate,toTime) REFERENCES '
+        // + 'rentals(fromDate,fromTime,toDate,toTime) '
+        // + 'ON DELETE CASCADE ON UPDATE CASCADE)');
+
+        // _db.run('CREATE TABLE if not exists customer (cellphone TEXT PRIMARY KEY, '
+        // + 'name TEXT, address TEXT, dlicense TEXT)');
+
+        // _db.run('INSERT INTO branch (location, city) '
+        // + 'VALUES '
+        // + '("Kerrisdale", "Vancouver"),'
+        // + '("Kitsilano", "Vancouver"),'
+        // + '("Downtown", "Vancouver"),'
+        // + '("Metrotown", "Burnaby"),'
+        // + '("SFU", "Burnaby"), '
+        // + '("Central Park", "Burnaby")');
 
         // _db.run('INSERT INTO vehicletype (vtname, features, wrate, drate, hrate, wirate, dirate, hirate, krate) '
         // + 'VALUES '
@@ -95,7 +106,11 @@ function initDb(callback) {
         // '(998, "MIA10S", "Toyota", "Camry", 2010, "Red", 100, "for_rent", "Full-size", "Central Park", "Burnaby"), ' +
         // '(200, "398BCS", "Nissan", "Titan", 2001, "White", 120, "for_rent", "Truck", "Kerrisdale", "Vancouver"), ' +
         // '(1200, "917H23", "Nissan", "Titan", 2001, "Red", 120, "for_rent", "Truck", "Metrotown", "Burnaby")');
-    });
+
+        // _db.run('INSERT INTO customer (cellphone, name, address, dlicense) VALUES' +
+        // '("123-456-7890", "Bob", "123 burrard street", "A0A0A0")');
+
+      });
 }
 
 function getDb() {
