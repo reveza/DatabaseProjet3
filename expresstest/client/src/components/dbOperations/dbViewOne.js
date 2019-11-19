@@ -26,7 +26,6 @@ class DbViewOneTable extends Component {
         .then( res => {
             this.setState({table: JSON.stringify(res.data, null, 4)});
             this.setState({tableResponse: true});
-            console.log(res.data);
         });
     }
 

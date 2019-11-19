@@ -24,4 +24,11 @@ router.post('/delete', function(req, res, next) {
   });
 });
 
+router.post('/insert', function(req, res, next) {
+  sql = 'INSERT INTO ' + req.body.tableName + req.body.columns + ' VALUES ' + req.body.values;
+  db().run(sql, function(err, rows) {
+    res.send(rows);
+  });
+});
+
 module.exports = router;

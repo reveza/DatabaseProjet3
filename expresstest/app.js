@@ -31,9 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/all', indexRouter);
 app.use('/all/update', indexRouter);
 app.use('/all/delete', indexRouter);
+app.use('/all/insert', indexRouter);
+
 app.use('/rentals', rentalsRouter);
 app.use('/rentals/daily', rentalsRouter);
 app.use('/rentals/branch', rentalsRouter);
+
 app.use('/returns', returnsRouter);
 app.use('/returns/daily', returnsRouter);
 app.use('/returns/branch', returnsRouter);

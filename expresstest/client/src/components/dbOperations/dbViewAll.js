@@ -17,7 +17,6 @@ class DbViewAllTables extends Component {
         .then( res => {
             this.setState({listTable: JSON.stringify(res.data)});
             this.setState({listTableAnswer: true});
-            console.log(res.data);
         });
     }
 

@@ -6,8 +6,8 @@ class DbAdd extends Component {
         super(props);
         this.state = {
             tableName: "",
-            add: null,
-            primary_key: null
+            columns: null,
+            values: null
         }
     }
 
@@ -19,7 +19,7 @@ class DbAdd extends Component {
 
     handleViewOneTable = (event) => {
         const data = this.state;
-        axios.post('all/update', data);
+        axios.post('all/insert', data);
     }
 
     render () {
@@ -35,14 +35,14 @@ class DbAdd extends Component {
                     </div>
                     <div className="flex-element">
                         <p className="text">
-                            primary_key = value
-                            <input type='text' placeholder='primaryKey' name='primary_key' onChange={this.handleInputChange}/>
+                            EX: (rid, vid, ...)
+                            <input type='text' placeholder='(columns)' name='columns' onChange={this.handleInputChange}/>
                         </p>
                     </div>
                     <div className="flex-element">
                         <p className="text">
-                            column_name = "updated_value" (no double quote if value is a number)
-                            <input type='text' placeholder='update column' name='update' onChange={this.handleInputChange}/>
+                            EX: (2, 3)
+                            <input type='text' placeholder='(values)' name='values' onChange={this.handleInputChange}/>
                         </p>
                     </div>
                     <div className="flex-element">
