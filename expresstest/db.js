@@ -10,30 +10,33 @@ function initDb(callback) {
     _db.serialize(function() {
         _db.exec('PRAGMA foreign_keys = ON;', function(error)  {
             if (error){
-                console.error("Pragma statement didn't work.")
+                console.error("Pragma statement didn't work.");
             } else {
-                console.log("Foreign Key Enforcement is on.")
+                console.log("Foreign Key Enforcement is on.");
             }
         });
 
         // _db.run('CREATE TABLE if not exists rentals (' +
-        //     'rid INTEGER PRIMARY KEY, ' +
-        //     'vid REAL, ' +
-        //     'cellphone REAL, ' +
-        //     'fromDate REAL, ' +
-        //     'fromTime REAL, ' +
-        //     'toDate REAL, ' +
-        //     'toTime REAL, ' +
-        //     'odometer REAL, ' +
-        //     'cardName TEXT, ' +
-        //     'cardNo REAL, ' +
-        //     'expDate REAL, ' +
+        //     'rid INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        //     'vid REAL NOT NULL, ' +
+        //     'cellphone REAL NOT NULL, ' +
+        //     'fromDate REAL NOT NULL, ' +
+        //     'fromTime REAL NOT NULL, ' +
+        //     'toDate REAL NOT NULL, ' +
+        //     'toTime REAL NOT NULL, ' +
+        //     'odometer REAL NOT NULL, ' +
+        //     'cardName TEXT NOT NULL, ' +
+        //     'cardNo REAL NOT NULL, ' +
+        //     'expDate REAL NOT NULL, ' +
         //     'confNo REAL, ' +
-        //     'FOREIGN KEY (cellphone) REFERENCES customer (cellphone) ON DELETE CASCADE ON UPDATE NO ACTION, '+
-        //     'FOREIGN KEY (confNo) REFERENCES reservation (confNo))');
+        //     'FOREIGN KEY (vid) REFERENCES vehicle (vid) ON DELETE NO ACTION ON UPDATE CASCADE,' +
+        //     'FOREIGN KEY (cellphone) REFERENCES customer (cellphone) ON DELETE NO ACTION ON UPDATE CASCADE, '+
+        //     'FOREIGN KEY (confNo) REFERENCES reservation (confNo) ON DELETE NO ACTION ON UPDATE NO ACTION);');
 
-        // _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY NOT NULL, date REAL, time REAL, odometer REAL' +
-        // ', fulltank REAL, value REAL, FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE CASCADE ON UPDATE NO ACTION)');
+        // _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY, '+
+        // 'date REAL NOT NULL, time REAL NOT NULL, odometer REAL NOT NULL' +
+        // ', fulltank REAL NOT NULL, value REAL NOT NULL, ' +
+        // 'FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE NO ACTION ON UPDATE CASCADE)');
 
         // _db.run('CREATE TABLE if not exists branch ('+
         // 'location TEXT,city TEXT,PRIMARY KEY(location, city))');

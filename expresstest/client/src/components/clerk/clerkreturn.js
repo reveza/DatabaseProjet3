@@ -22,16 +22,8 @@ class ClerkReturn extends Component {
         this.setState({error: "no err"});
         event.preventDefault();
         const data = this.state;
-        axios.post('/returns', data,
-        // {
-        //     headers : {
-        //       'Content-Type': 'application/json',
-        //       'Accept': 'application/json'
-        //     }
-          // }
-        )
+        axios.post('/returns', data)
         .then( res => {
-            console.log(res);
             this.setState({error: res.data});
             this.setState({showError: true});
         });
