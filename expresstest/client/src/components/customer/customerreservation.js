@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Popup from "reactjs-popup";
 
 class CustomerReservation extends Component {
     constructor(props) {
@@ -20,23 +21,23 @@ class CustomerReservation extends Component {
     }
 
     handleSubmit = (event) => {
-        this.setState({error:"no err"});
+        this.state.error = "no err";
         event.preventDefault();
         const data = this.state;
-        axios.post('/reservation', data,
+        axios.post('/customer/test', data);
+        axios.post('/reservation/test', data);
         // {
         //     headers : {
         //       'Content-Type': 'application/json',
         //       'Accept': 'application/json'
         //     }
           // }
-        )
-        .then( res => {
-            console.log(res);
-            this.setState({error: res.data});
-            this.setState({showError: true});
-        });
-        this.setState({closed: false});
+        // .then( res => {
+        //     console.log(res);
+        //     this.setState({error: res.data});
+        //     this.setState({showError: true});
+        // });
+        // this.setState({closed: false});
     }
 
     handleInputChange = (event) => {
