@@ -4,14 +4,17 @@ let db = require('../db').getDb;
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-
+  let result = {rid: null, err: null};
   db().run(
     `INSERT INTO rentals (vid, cellphone, fromDate, fromTime, toDate, toTime, odometer, cardName, cardNo, expDate, confNo)` +
     `VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.vid, req.body.cellphone, req.body.fromDate, req.body.fromTime, req.body.toDate,
-      req.body.toTime, req.body.odometer, req.body.cardName, req.body.cardNo, req.body.expDate, req.body.confNo], function(err) {
+      req.body.toTime, req.body.odometer, req.body.cardName, req.body.cardNo, req.body.expDate, req.body.confNo], function(err, rows) {
         if (err) {
-          res.send(err.message);
+          result['err'] = err.message;
+        } else {
+          result['rid'] = this.lastID;
         }
+        res.send(result);
     });
 });
 
@@ -21,23 +24,19 @@ router.get('/', function(req, res, next) {
   });
 });
 
-// Daily Rental Report
-router.post('/daily', function(req, res, next) {
-  let daily_vid = [];
-  let new_rental = 0;
-  const currentDate = new Date();
-  db().all('SELECT fromDate, toDate, vid FROM rentals;', function(err, rows) {
-    rows.forEach( row => {
-      var from_date = new Date(row.fromDate);
-      var to_date =  new Date(row.toDate);
+// // Daily Rental Report
+// router.post('/daily', function(req, res, next) {
+//   let sql = 'SELECT * FROM rentals r, vehicle v WHERE date(r.fromDate) <= date("now") <= date(r.toDate) GROUP BY v.location';
+//   db().all(sql, function(err, rows) {
+//     console.log(rows);
+//   });
+// });
 
-      if (currentDate > from_date && currentDate < to_date ){
-        daily_vid += vid;
-      } else if (currentDate == from_date) {
-        //rental made today is considered a new rental
-        new_rental += 1;
-      }
-    });
+router.get('/daily', function(req, res, next) {
+  let sql = 'SELECT DISTINCT v.location, v.vtname, COUNT(v.vtname) FROM rentals r, vehicle v WHERE r.vid = v.vid AND date(r.fromDate) <= date("now") <= date(r.toDate) GROUP BY v.location';
+  db().all(sql, function(err, rows) {
+    console.log(rows);
+    res.send(rows);
   });
 });
 

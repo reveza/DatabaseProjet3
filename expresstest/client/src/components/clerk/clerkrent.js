@@ -19,6 +19,7 @@ class ClerkRent extends Component {
             confNo: null,
             error: "no err",
             showError: false,
+            showTicket: false,
             closed: true
         }
 
@@ -31,8 +32,13 @@ class ClerkRent extends Component {
         const data = this.state;
         axios.post('/rentals', data)
         .then( res => {
-            this.setState({error: res.data});
-            this.setState({showError: true});
+            if (res.data.rid !== null) {
+                this.setState({rid: res.data.rid});
+                this.setState({showTicket: true});
+            } else {
+                this.setState({error: res.data.err});
+                this.setState({showError: true});
+            }
         })
         this.setState({closed: false});
     }
@@ -45,19 +51,21 @@ class ClerkRent extends Component {
 
     handleClose() {
         this.setState({showError: false});
+        this.setState({showTicket: false});
         this.setState({closed: true})
     }
 
 
     render () {
         const showError = this.state.showError;
+        const showTicket = this.state.showTicket;
         const closed = this.state.closed;
         return (
             <div>
                 <h5>Rent a vehicle</h5>
                 <form onSubmit={this.handleSubmit}>
-                    {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>}
-                    {!closed && !showError &&
+                    {!closed && showError && <div>{this.state.error}<button onClick={this.handleClose}>X</button></div>}
+                    {!closed && showTicket &&
                     <div>
                         Rental was made for RentId {this.state.rid}, Vid {this.state.vid}, Cellphone {this.state.cellphone},
                         From Date {this.state.fromDate}, fromTime {this.state.fromTime}, toDate {this.state.toDate}, 
@@ -67,10 +75,10 @@ class ClerkRent extends Component {
                     </div>}
                     <p><input type='text' placeholder='Vehicle ID' name='vid' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='Cellphone' name='cellphone' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='fromDate DD/MM/YYYY' name='fromDate' onChange={this.handleInputChange}/></p>
-                    <p><input type='text' placeholder='fromTime HH/MM' name='fromTime' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='toDate DD/MM/YYYY' name='toDate' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='toTime HH/MM' name='toTime' onChange={this.handleInputChange}/></p>
+                    <input type='text' placeholder='fromDate YYYY-MM-DD' name='fromDate' onChange={this.handleInputChange}/></p>
+                    <p><input type='text' placeholder='fromTime HH:MM' name='fromTime' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='toDate YYYY-MM-DD' name='toDate' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='toTime HH:MM' name='toTime' onChange={this.handleInputChange}/></p>
                     <p><input type='text' placeholder='Odometer' name='odometer' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='cardName' name='cardName' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='CardNumber' name='cardNo' onChange={this.handleInputChange}/></p>
