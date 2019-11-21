@@ -7,7 +7,7 @@ router.post('/test', function(req, res,next) {
   console.log("done");
   confNumber = db().run('SELECT COUNT(*) FROM reservation') + 1;
   console.log(confNumber);
-  res.sendStatus(200);
+  // res.sendStatus(200);
   db().run(
     'INSERT INTO reservation (vtname, cellphone, fromDate, fromTime, '
         + 'toDate, toTime)' + ' VALUES(?, ?, ?, ?, ?, ?)',
@@ -27,8 +27,6 @@ router.get('/', function(req, res, next) {
     res.send(rows);
   });
 });
-
-
 
 
 module.exports = router;
