@@ -16,27 +16,25 @@ function initDb(callback) {
             }
         });
 
-        _db.run('CREATE TABLE if not exists rentals (' +
-            'rid INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-            'vid REAL NOT NULL, ' +
-            'cellphone REAL NOT NULL, ' +
-            'fromDate REAL NOT NULL, ' +
-            'fromTime REAL NOT NULL, ' +
-            'toDate REAL NOT NULL, ' +
-            'toTime REAL NOT NULL, ' +
-            'odometer REAL NOT NULL, ' +
-            'cardName TEXT NOT NULL, ' +
-            'cardNo REAL NOT NULL, ' +
-            'expDate REAL NOT NULL, ' +
-            'confNo REAL, ' +
-            'FOREIGN KEY (vid) REFERENCES vehicle (vid) ON DELETE NO ACTION ON UPDATE CASCADE,' +
-            'FOREIGN KEY (cellphone) REFERENCES customer (cellphone) ON DELETE NO ACTION ON UPDATE CASCADE, '+
-            'FOREIGN KEY (confNo) REFERENCES reservation (confNo) ON DELETE NO ACTION ON UPDATE NO ACTION);');
 
-        _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY, '+
-        'date REAL NOT NULL, time REAL NOT NULL, odometer REAL NOT NULL' +
-        ', fulltank REAL NOT NULL, value REAL NOT NULL, ' +
-        'FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE NO ACTION ON UPDATE CASCADE)');
+        _db.run('CREATE TABLE if not exists rentals (' +
+            'rid INTEGER PRIMARY KEY, ' +
+            'vid REAL, ' +
+            'cellphone REAL, ' +
+            'fromDate REAL, ' +
+            'fromTime REAL, ' +
+            'toDate REAL, ' +
+            'toTime REAL, ' +
+            'odometer REAL, ' +
+            'cardName TEXT, ' +
+            'cardNo REAL, ' +
+            'expDate REAL, ' +
+            'confNo REAL, ' +
+            'FOREIGN KEY (cellphone) REFERENCES customer (cellphone) ON DELETE CASCADE ON UPDATE NO ACTION, '+
+            'FOREIGN KEY (confNo) REFERENCES reservation (confNo))');
+
+        _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY NOT NULL, date REAL, time REAL, odometer REAL' +
+        ', fulltank REAL, value REAL, FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE CASCADE ON UPDATE NO ACTION)');
 
         _db.run('CREATE TABLE if not exists branch ('+
         'location TEXT,city TEXT,PRIMARY KEY(location, city))');
@@ -50,11 +48,8 @@ function initDb(callback) {
         'vtname TEXT, location TEXT, city TEXT, PRIMARY KEY(vid), FOREIGN KEY(location, city) REFERENCES branch(location, city) ' +
         'ON DELETE CASCADE ON UPDATE NO ACTION, FOREIGN KEY(vtname) REFERENCES vehicletype(vtname) ON DELETE CASCADE ON UPDATE NO ACTION)');
 
-        _db.run('CREATE TABLE if not exists customer (cellphone TEXT PRIMARY KEY, '
-        + 'name TEXT, address TEXT, dlicense TEXT)');
-
-        _db.run('CREATE TABLE if not exists reservation ('
-        + 'confNo INTEGER PRIMARY KEY AUTOINCREMENT, '
+        _db.run('CREATE TABLE IF NOT EXISTS reservation ('
+        + 'confNo INTEGER PRIMARY KEY, '
         + 'vtname TEXT, '
         + 'cellphone TEXT, '
         + 'fromDate TEXT, '
@@ -64,10 +59,15 @@ function initDb(callback) {
         + 'FOREIGN KEY(vtname) REFERENCES vehicletype(vtname)'
         + 'ON DELETE SET NULL ON UPDATE CASCADE, '
         + 'FOREIGN KEY(cellphone) REFERENCES customer(cellphone)'
-        + 'ON DELETE SET NULL ON UPDATE CASCADE)'
-      );
+        + 'ON DELETE SET NULL ON UPDATE CASCADE, '
+        + 'FOREIGN KEY(fromDate,fromTime,toDate,toTime) REFERENCES '
+        + 'rentals(fromDate,fromTime,toDate,toTime) '
+        + 'ON DELETE CASCADE ON UPDATE CASCADE)');
 
-        _db.run('INSERT OR IGNORE INTO branch (location, city) '
+        _db.run('CREATE TABLE if not exists customer (cellphone TEXT PRIMARY KEY, '
+        + 'name TEXT, address TEXT, dlicense TEXT)');
+
+        _db.run('INSERT INTO branch (location, city) '
         + 'VALUES '
         + '("Kerrisdale", "Vancouver"),'
         + '("Kitsilano", "Vancouver"),'
@@ -76,7 +76,7 @@ function initDb(callback) {
         + '("SFU", "Burnaby"), '
         + '("Central Park", "Burnaby")');
 
-        _db.run('INSERT OR IGNORE INTO vehicletype (vtname, features, wrate, drate, hrate, wirate, dirate, hirate, krate) '
+        _db.run('INSERT INTO vehicletype (vtname, features, wrate, drate, hrate, wirate, dirate, hirate, krate) '
         + 'VALUES '
         + '("Economy", "GPS", 150, 40, 8, 12, 4, 1, 1), '
         + '("Compact", "GPS", 150.00, 40.00, 8.00, 12.00, 4.00, 1.00, 0.50),' +
@@ -86,7 +86,7 @@ function initDb(callback) {
         '("SUV", "GPS & Bluetooth", 400.00, 80.00, 20.00, 30.00, 10.00, 3.00, 1.00),' +
         '("Truck", "GPS & Radio", 375.00, 80.00, 20.00, 30.00, 10.00, 3.00, 1.00)');
 
-        _db.run('INSERT OR IGNORE INTO vehicle (vid, vlicense, make, model, year, color, ' +
+        _db.run('INSERT INTO vehicle (vid, vlicense, make, model, year, color, ' +
         'odometer, status, vtname, location, city) VALUES ' +
         '(1, "HELLO", "BMW", "X5", 2019, "White", 10, "for_sale", "Standard", "Kerrisdale", "Vancouver"), ' +
         '(11, "AB123C", "BMW", "X6", 2019, "Black", 10, "for_rent", "Standard", "Kerrisdale", "Vancouver"), ' +
@@ -108,7 +108,8 @@ function initDb(callback) {
         '(200, "398BCS", "Nissan", "Titan", 2001, "White", 120, "for_rent", "Truck", "Kerrisdale", "Vancouver"), ' +
         '(1200, "917H23", "Nissan", "Titan", 2001, "Red", 120, "for_rent", "Truck", "Metrotown", "Burnaby")');
 
-
+        _db.run('INSERT INTO customer (cellphone, name, address, dlicense) VALUES' +
+        '("123-456-7890", "Bob", "123 burrard street", "A0A0A0")');
 
       });
 }

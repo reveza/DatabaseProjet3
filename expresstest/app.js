@@ -39,6 +39,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+  res.header('Access-Control-Expose-Headers', 'Content-Length');
+  res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
+  res.header('Access-Control-Max-Age', '600');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  else return next();
+});
+
 app.use('/all', indexRouter);
 app.use('/all/update', indexRouter);
 app.use('/all/delete', indexRouter);
@@ -52,9 +63,9 @@ app.use('/returns', returnsRouter);
 app.use('/returns/daily', returnsRouter);
 app.use('/returns/branch', returnsRouter);
 app.use('/branch', branchRouter);
-
 app.use('/vehicletype', vehicletypeRouter);
 app.use('/vehicle', vehicleRouter);
+app.use('/vehicle/available', vehicleRouter);
 app.use('/reservation', reservationRouter);
 app.use('/customer', customerRouter);
 
@@ -77,7 +88,5 @@ app.use(function(err, req, res, next) {
 process.on('SIGINT', () => {
   getDb().close();
 });
-
-
 
 module.exports = app;
