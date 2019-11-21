@@ -54,8 +54,8 @@ class ClerkReturn extends Component {
                     Odometer {this.state.odometer}, FullTank {this.state.fullTank} and Value {this.state.value}
                     <button onClick={this.handleClose}>X</button></div>}
                     <p><input type='text' placeholder='Rent ID' name='rid' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='Date DD/MM/YYY' name='date' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='Time HH/MM' name='time' onChange={this.handleInputChange}/></p>
+                    <input type='text' placeholder='Date YYYY-MM-DD' name='date' onChange={this.handleInputChange}/>
+                    <input type='text' placeholder='Time HH:MM' name='time' onChange={this.handleInputChange}/></p>
                     <p><input type='text' placeholder='Odometer' name='odometer' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='fullTank' name='fullTank' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='Value' name='value' onChange={this.handleInputChange}/></p>

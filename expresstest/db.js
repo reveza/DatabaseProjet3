@@ -16,27 +16,27 @@ function initDb(callback) {
             }
         });
 
-        // _db.run('CREATE TABLE if not exists rentals (' +
-        //     'rid INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-        //     'vid REAL NOT NULL, ' +
-        //     'cellphone REAL NOT NULL, ' +
-        //     'fromDate REAL NOT NULL, ' +
-        //     'fromTime REAL NOT NULL, ' +
-        //     'toDate REAL NOT NULL, ' +
-        //     'toTime REAL NOT NULL, ' +
-        //     'odometer REAL NOT NULL, ' +
-        //     'cardName TEXT NOT NULL, ' +
-        //     'cardNo REAL NOT NULL, ' +
-        //     'expDate REAL NOT NULL, ' +
-        //     'confNo REAL, ' +
-        //     'FOREIGN KEY (vid) REFERENCES vehicle (vid) ON DELETE NO ACTION ON UPDATE CASCADE,' +
-        //     'FOREIGN KEY (cellphone) REFERENCES customer (cellphone) ON DELETE NO ACTION ON UPDATE CASCADE, '+
-        //     'FOREIGN KEY (confNo) REFERENCES reservation (confNo) ON DELETE NO ACTION ON UPDATE NO ACTION);');
+    //     _db.run('CREATE TABLE if not exists rentals (' +
+    //         'rid INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    //         'vid REAL NOT NULL, ' +
+    //         'cellphone REAL NOT NULL, ' +
+    //         'fromDate REAL NOT NULL, ' +
+    //         'fromTime REAL NOT NULL, ' +
+    //         'toDate REAL NOT NULL, ' +
+    //         'toTime REAL NOT NULL, ' +
+    //         'odometer REAL NOT NULL, ' +
+    //         'cardName TEXT NOT NULL, ' +
+    //         'cardNo REAL NOT NULL, ' +
+    //         'expDate REAL NOT NULL, ' +
+    //         'confNo REAL, ' +
+    //         'FOREIGN KEY (vid) REFERENCES vehicle (vid) ON DELETE NO ACTION ON UPDATE CASCADE,' +
+    //         'FOREIGN KEY (cellphone) REFERENCES customer (cellphone) ON DELETE NO ACTION ON UPDATE CASCADE, '+
+    //         'FOREIGN KEY (confNo) REFERENCES reservation (confNo) ON DELETE NO ACTION ON UPDATE NO ACTION);');
 
-        // _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY, '+
-        // 'date REAL NOT NULL, time REAL NOT NULL, odometer REAL NOT NULL' +
-        // ', fulltank REAL NOT NULL, value REAL NOT NULL, ' +
-        // 'FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE NO ACTION ON UPDATE CASCADE)');
+    //     _db.run('CREATE TABLE if not exists returns (rid INTEGER PRIMARY KEY, '+
+    //     'date REAL NOT NULL, time REAL NOT NULL, odometer REAL NOT NULL' +
+    //     ', fulltank REAL NOT NULL, value REAL NOT NULL, ' +
+    //     'FOREIGN KEY(rid) REFERENCES rentals(rid) ON DELETE NO ACTION ON UPDATE CASCADE)');
 
     //     _db.run('CREATE TABLE if not exists branch ('+
     //     'location TEXT,city TEXT,PRIMARY KEY(location, city))');
@@ -107,6 +107,10 @@ function initDb(callback) {
     //     '(998, "MIA10S", "Toyota", "Camry", 2010, "Red", 100, "for_rent", "Full-size", "Central Park", "Burnaby"), ' +
     //     '(200, "398BCS", "Nissan", "Titan", 2001, "White", 120, "for_rent", "Truck", "Kerrisdale", "Vancouver"), ' +
     //     '(1200, "917H23", "Nissan", "Titan", 2001, "Red", 120, "for_rent", "Truck", "Metrotown", "Burnaby")');
+
+        // _db.run('INSERT OR IGNORE INTO customer (cellphone, name, address, dlicense) '
+        // + 'VALUES '
+        // + '("123-456-7890", "BOb", "HEHE", "LICENSE")');
 
       });
 }
