@@ -19,7 +19,14 @@ router.post('/update', function(req, res, next) {
 router.post('/delete', function(req, res, next) {
   console.log("UO");
   sql = 'DELETE FROM ' + req.body.tableName + ' WHERE ' + req.body.delete;
-  db().run('DELETE FROM rentals WHERE rid=100;', function(err, rows) {
+  db().run('DELETE FROM returns WHERE rid=33;', function(err, rows) {
+    res.send(rows);
+  });
+});
+
+router.post('/insert', function(req, res, next) {
+  sql = 'INSERT INTO ' + req.body.tableName + req.body.columns + ' VALUES ' + req.body.values;
+  db().run(sql, function(err, rows) {
     res.send(rows);
   });
 });

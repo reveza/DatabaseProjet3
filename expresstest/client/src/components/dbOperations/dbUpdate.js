@@ -41,7 +41,7 @@ class DbUpdate extends Component {
                     </div>
                     <div className="flex-element">
                         <p className="text">
-                            column_name = "updated_value" (no double quote if value is a number)
+                            column_name = "updated_value"
                             <input type='text' placeholder='update column' name='update' onChange={this.handleInputChange}/>
                         </p>
                     </div>

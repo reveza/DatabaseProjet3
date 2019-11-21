@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Popup from "reactjs-popup";
 
 class CustomerReservation extends Component {
     constructor(props) {
@@ -12,31 +13,36 @@ class CustomerReservation extends Component {
             fromDate: null,
             toTime: null,
             toDate: null,
+            address: null,
+            dlicense: null,
             error: "no err",
             showError: false,
-            closed: true
+            closed: true,
+            customerExists: true,
+            k: 0
         }
         this.handleClose = this.handleClose.bind(this);
     }
 
     handleSubmit = (event) => {
-        this.setState({error:"no err"});
+        this.state.error = "no err";
         event.preventDefault();
         const data = this.state;
-        axios.post('/reservation', data,
-        // {
-        //     headers : {
-        //       'Content-Type': 'application/json',
-        //       'Accept': 'application/json'
-        //     }
-          // }
-        )
+        axios.post('/customer/check', data)
         .then( res => {
-            console.log(res);
-            this.setState({error: res.data});
-            this.setState({showError: true});
+          if (res.data !=="exists" && this.state.k == 0){
+            this.setState({customerExists:false});
+            this.setState({k:1});
+          } else {
+            axios.post('/reservation/test', data);
+          }
         });
-        this.setState({closed: false});
+
+        if (this.state.k == 1 && (!this.state.customerExists)) {
+          axios.post('/customer/test', data);
+          axios.post('/reservation/test', data);
+          this.setState({k:0});
+        };
     }
 
     handleInputChange = (event) => {
@@ -70,6 +76,12 @@ class CustomerReservation extends Component {
 
                     <p><input type='text' placeholder='To Time' name='toTime' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='To Date' name='toDate' onChange={this.handleInputChange}/></p>
+                    {!this.state.customerExists && <div>
+                      Customer does not exist. Please input information
+                      <p><input type='text' placeholder='Address' name='address' onChange={this.handleInputChange}/>
+                      <input type='text' placeholder='Driving License' name='dlicense' onChange={this.handleInputChange}/></p>
+                      </div>
+                    }
                     <p><button>Make a reservation</button></p>
                 </form>
             </div>
