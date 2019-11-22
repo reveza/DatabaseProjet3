@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Popup from "reactjs-popup";
 
 class CustomerReservation extends Component {
     constructor(props) {
@@ -28,14 +27,14 @@ class CustomerReservation extends Component {
     }
 
     handleSubmit = (event) => {
-        this.state.error = "no err";
+        this.setState({error: "no err"});
         event.preventDefault();
         const data = this.state;
         axios.post('/reservation/checkAvailibility', data).then(res=>{
-          if (res.data == "Available") {
+          if (res.data === "Available") {
             axios.post('/customer/check', data)
             .then( res => {
-              if (res.data !=="exists" && this.state.k == 0){
+              if (res.data !=="exists" && this.state.k === 0){
                 this.setState({customerExists:false});
                 this.setState({k:1});
               } else {
@@ -51,7 +50,7 @@ class CustomerReservation extends Component {
                 });
               }
             });
-            if (this.state.k == 1 && (!this.state.customerExists) && this.state.carAvailable) {
+            if (this.state.k === 1 && (!this.state.customerExists) && this.state.carAvailable) {
               axios.post('/customer/test', data);
               axios.post('/reservation/test', data)
               .then(res=> {
