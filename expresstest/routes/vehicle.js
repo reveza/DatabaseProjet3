@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/available', function (req, res, next) {
-  let count = 'SELECT COUNT(*) FROM vehicle';
+  let count = 'SELECT vid FROM vehicle';
     if (req.body.location) {
       count += ' WHERE location = "' + req.body.location + '"';
     }
@@ -23,12 +23,19 @@ router.post('/available', function (req, res, next) {
     }
 
   if (req.body.fromDate && req.body.toDate) {
-      let rentedvehicles = 'SELECT COUNT(vid) FROM rentals WHERE fromDate >= DATE(' + [req.body.fromDate] +
-       ') AND toDate <= DATE(' + [req.body.toDate] + ')';
-        rentedvehicles = count - rentedvehicles;
+    let rentedvehicles = 'SELECT vid FROM rentals WHERE fromDate >= "' + req.body.fromDate +
+     '" AND toDate <= "' + req.body.toDate + '"';
+     if (req.body.location || req.body.vtname) {
+       count = count + ' AND vid NOT IN (' + rentedvehicles + ')';
+     } else {
+       count = count + ' WHERE vid NOT IN (' + rentedvehicles + ')';
+     }
     }
+
+    count = 'SELECT COUNT(*) FROM vehicle WHERE vid IN (' + count + ')';
+
   db().all(count, function(err, rows) {
-    let count_answer = rows[0]["COUNT(*)"].toString();
+  let count_answer = rows[0]["COUNT(*)"].toString();
     res.send(count_answer);
   });
 });
@@ -47,9 +54,14 @@ router.post('/view_available', function (req, res, next) {
       }
 
       if (req.body.fromDate && req.body.toDate) {
-          let rentedvehicles = 'SELECT vid FROM rentals WHERE fromDate >= DATE(' + [req.body.fromDate] +
-           ') AND toDate <= DATE(' + [req.body.toDate] + ')';
-          sql = sql + ' EXCEPT ' + rentedvehicles;
+          let rentedvehicles = 'SELECT vid FROM rentals WHERE fromDate >= "' + req.body.fromDate +
+           '" AND toDate <= "' + req.body.toDate + '"';
+          // sql = sql + ' EXCEPT ' + rentedvehicles;
+          if (req.body.location || req.body.vtname) {
+            sql = sql + ' AND vid NOT IN (' + rentedvehicles + ')';
+          } else {
+            sql = sql + ' WHERE vid NOT IN (' + rentedvehicles + ')';
+          }
         }
         sql = 'SELECT * FROM vehicle WHERE vid IN (' + sql + ')';
     sql += " ORDER BY city, location, vtname";
