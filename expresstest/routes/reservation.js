@@ -3,20 +3,44 @@ var router = express.Router();
 let db = require('../db').getDb;
 /* GET confirmation number. */
 
+router.post('/checkAvailibility', function(req, res, next) {
+  // let sql = 'SELECT COUNT(*) FROM rentals WHERE vid = ' + [req.body.vid]
+  // + ' AND ( (DATE(toDate) <= DATE(' + req.body.toDate + ')'
+  // + ' AND DATE(fromDate) >= DATE(' + req.body.fromDate + '))'
+  // + ' OR (DATE(toDate) <= DATE(' + req.body.toDate + ')'
+  // + ' AND DATE(toDate) >= DATE(' + req.body.fromDate + '))'
+  // + ' OR (DATE(fromDate) <= DATE(' + req.body.toDate + ')'
+  // + ' AND DATE(fromDate) >= DATE(' + req.body.fromDate + ')))'
+  let sql = 'SELECT COUNT(*) FROM rentals WHERE vid = ' + [req.body.vid]
+  + ' AND ( (toDate <= "' + req.body.toDate + '"'
+  + ' AND fromDate >= "' + req.body.fromDate + '")'
+  + ' OR (toDate <= "' + req.body.toDate + '"'
+  + ' AND toDate >= "' + req.body.fromDate + '")'
+  + ' OR (fromDate <= "' + req.body.toDate + '"'
+  + ' AND fromDate >= "' + req.body.fromDate + '"))'
+  console.log(sql);
+  db().all(sql, function(err, rows){
+    console.log(rows);
+    if (rows[0]["COUNT(*)"] == 0){
+      res.send("Available");
+    } else{
+      res.send("Not Available");
+  }});
+});
+
 router.post('/test', function(req, res,next) {
-  console.log("done");
-  confNumber = db().run('SELECT COUNT(*) FROM reservation') + 1;
-  console.log(confNumber);
-  // res.sendStatus(200);
+  let result = {confNo: null};
   db().run(
-    'INSERT INTO reservation (vtname, cellphone, fromDate, fromTime, '
+    'INSERT INTO reservation (vid, cellphone, fromDate, fromTime, '
         + 'toDate, toTime)' + ' VALUES(?, ?, ?, ?, ?, ?)',
-        [req.body.vtname, req.body.cellphone, req.body.fromDate, req.body.fromTime,
+        [req.body.vid, req.body.cellphone, req.body.fromDate, req.body.fromTime,
         req.body.toDate, req.body.toTime], function(err, rows) {
           if (err) {
             return console.log(err.message);
           } else {
-            return console.log("last row id: " + this.lastID)
+            result['confNo'] = this.lastID;
+            res.send(result);
+            return console.log("last row id: " + this.lastID);
           }
         }
   );

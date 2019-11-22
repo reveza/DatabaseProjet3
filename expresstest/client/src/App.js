@@ -3,6 +3,7 @@ import './App.css';
 import ClerkRent from './components/clerk/clerkrent';
 import ClerkReturn from './components/clerk/clerkreturn';
 import CustomerReservation from './components/customer/customerreservation';
+import ViewAvailableVehicles from './components/customer/viewavailablevehicles';
 import DbViewAllTables from './components/dbOperations/dbViewAll';
 import DbViewOneTable from './components/dbOperations/dbViewOne';
 import DbUpdate from './components/dbOperations/dbUpdate';
@@ -18,6 +19,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h2>Customer</h2>
+        <div className="flex">
+          <div className="flex-element">
+            <ViewAvailableVehicles/>
+          </div>
+        </div>
           <div className="flex">
             <div className="flex-element">
               <CustomerReservation/>

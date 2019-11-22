@@ -59,11 +59,9 @@ class ViewAvailableVehicles extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <p><input type='text' placeholder='Car Type' name='vtname' onChange={this.handleInputChange}/></p>
                     <p><input type='text' placeholder='Location' name='location' onChange={this.handleInputChange}/></p>
-                    <p><input type='text' placeholder='From Time HH/MM' name='fromTime' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='From Date DD/MM/YYYY' name='fromDate' onChange={this.handleInputChange}/></p>
-                    <p><input type='text' placeholder='To Time HH/MM' name='toTime' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='To Date DD/MM/YYYY' name='toDate' onChange={this.handleInputChange}/></p>
-                    <p><button>View available vehicles</button></p>
+                    <p><input type='text' placeholder='From Date YYYY-MM-DD' name='fromDate' onChange={this.handleInputChange}/></p>
+                    <p><input type='text' placeholder='To Date YYYY-MM-DD' name='toDate' onChange={this.handleInputChange}/></p>
+                    <p><button>View number of available vehicles</button></p>
                     {this.state.vehicle_query && <div>
                       Vehicle number: {this.state.vehicle_number}
                       <p><button onClick={this.handleViewVehicles}>View available vehicles here</button></p>
