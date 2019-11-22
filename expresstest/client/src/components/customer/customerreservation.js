@@ -6,8 +6,9 @@ class CustomerReservation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            confNo:null,
             name: null,
-            vtname: null,
+            vid: null,
             cellphone: null,
             fromTime: null,
             fromDate: null,
@@ -19,7 +20,9 @@ class CustomerReservation extends Component {
             showError: false,
             closed: true,
             customerExists: true,
-            k: 0
+            k: 0,
+            carAvailable: true,
+            showTicket:false
         }
         this.handleClose = this.handleClose.bind(this);
     }
@@ -28,22 +31,45 @@ class CustomerReservation extends Component {
         this.state.error = "no err";
         event.preventDefault();
         const data = this.state;
-        axios.post('/customer/check', data)
-        .then( res => {
-          if (res.data !=="exists" && this.state.k == 0){
-            this.setState({customerExists:false});
-            this.setState({k:1});
+        axios.post('/reservation/checkAvailibility', data).then(res=>{
+          if (res.data == "Available") {
+            axios.post('/customer/check', data)
+            .then( res => {
+              if (res.data !=="exists" && this.state.k == 0){
+                this.setState({customerExists:false});
+                this.setState({k:1});
+              } else {
+                axios.post('/reservation/test', data)
+                .then(res=> {
+                  if(res.data.confNo !== null) {
+                    this.setState({confNo:res.data.confNo});
+                    this.setState({showTicket: true});
+                    this.setState({closed:false});
+
+                    this.setState({carAvailable:true});
+                  }
+                });
+              }
+            });
+            if (this.state.k == 1 && (!this.state.customerExists) && this.state.carAvailable) {
+              axios.post('/customer/test', data);
+              axios.post('/reservation/test', data)
+              .then(res=> {
+                if(res.data.confNo !== null) {
+                  this.setState({confNo:res.data.confNo});
+                  this.setState({showTicket: true});
+                  this.setState({closed:false});
+                  this.setState({carAvailable:true});
+                }
+              });
+              this.setState({k:0});
+            }
           } else {
-            axios.post('/reservation/test', data);
+            this.setState({carAvailable:false});
+            this.setState({closed:false});
           }
         });
-
-        if (this.state.k == 1 && (!this.state.customerExists)) {
-          axios.post('/customer/test', data);
-          axios.post('/reservation/test', data);
-          this.setState({k:0});
-        };
-    }
+      }
 
     handleInputChange = (event) => {
         this.setState({
@@ -53,10 +79,13 @@ class CustomerReservation extends Component {
 
     handleClose() {
         this.setState({showError: false});
-        this.setState({closed: true})
+        this.setState({closed: true});
+        this.setState({showTicket: false});
+        this.setState({carAvailable:true});
     }
 
     render () {
+        const showTicket = this.state.showTicket;
         const showError = this.state.showError;
         const closed = this.state.closed;
         return (
@@ -64,19 +93,22 @@ class CustomerReservation extends Component {
                 <h5>Reserve a vehicle</h5>
                 <form onSubmit={this.handleSubmit}>
                     {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>}
-                    {!closed && !showError &&
-                    <div>Customer ({this.state.name}, {this.state.cellphone}) made a reservation
-                    <button onClick={this.handleClose}>X</button></div>}
+                    {!closed && showTicket &&
+                    <div>Confirmation Number is {this.state.confNo}
+                    <button onClick={this.handleClose}>X</button>
+                    </div>}
                     <p><input type='text' placeholder='Name' name='name' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='Cellphone' name='cellphone' onChange={this.handleInputChange}/>
-                    <input type='text' placeholder='Vechicle Type' name='vtname' onChange={this.handleInputChange}/></p>
+                    <input type='text' placeholder='Vechicle ID' name='vid' onChange={this.handleInputChange}/></p>
 
                     <p><input type='text' placeholder='From Time' name='fromTime' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='From Date' name='fromDate' onChange={this.handleInputChange}/></p>
 
                     <p><input type='text' placeholder='To Time' name='toTime' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='To Date' name='toDate' onChange={this.handleInputChange}/></p>
-                    {!this.state.customerExists && <div>
+                    {!this.state.carAvailable && <div>
+                      This car is not available. Please choose another vehicle.</div>}
+                    {!closed && !this.state.customerExists && this.state.carAvailable && <div>
                       Customer does not exist. Please input information
                       <p><input type='text' placeholder='Address' name='address' onChange={this.handleInputChange}/>
                       <input type='text' placeholder='Driving License' name='dlicense' onChange={this.handleInputChange}/></p>
