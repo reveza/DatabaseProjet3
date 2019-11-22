@@ -89,18 +89,18 @@ function initDb(callback) {
 
       _db.run('INSERT OR IGNORE INTO vehicle (vid, vlicense, make, model, year, color, ' +
       'odometer, status, vtname, location, city) VALUES ' +
-      '(1, "HELLO", "BMW", "X5", 2019, "White", 10, "for_sale", "Standard", "Kerrisdale", "Vancouver"), ' +
+      '(1, "HELLO", "BMW", "X5", 2019, "White", 10, "for_rent", "Standard", "Kerrisdale", "Vancouver"), ' +
       '(11, "AB123C", "BMW", "X6", 2019, "Black", 10, "for_rent", "Standard", "Kerrisdale", "Vancouver"), ' +
       '(304, "CS304", "Mercedes", "ML", 2019, "Black", 10, "for_rent", "SUV", "Kitsilano", "Vancouver"), ' +
       '(12345, "B75J2L", "Mercedes", "GLE", 2019, "Black", 15, "for_rent", "SUV", "Downtown", "Vancouver"), ' +
       '(12342, "PK923D", "Range Rover", "Velar", 2018, "White", 10, "for_rent", "SUV", "Downtown", "Vancouver"), ' +
       '(99, "VS25T3", "Mazda", "3", 2018, "Black", 20, "for_rent", "Compact", "Metrotown", "Burnaby"), ' +
-      '(25, "1L023C", "BMW", "X6", 2019, "Black", 10, "for_sale", "Standard", "Metrotown", "Burnaby"), ' +
+      '(25, "1L023C", "BMW", "X6", 2019, "Black", 10, "for_rent", "Standard", "Metrotown", "Burnaby"), ' +
       '(23, "291023", "Nissan", "Versa Note", 2010, "Red", 90, "for_rent", "Economy", "Metrotown", "Burnaby"), ' +
       '(9, "L02343", "Nissan", "Versa Note", 2010, "Silver", 100, "for_rent", "Economy", "Metrotown", "Burnaby"), ' +
-      '(15, "98ASKW", "Chevrolet", "Malibu", 2015, "White", 50, "for_sale", "Mid-size", "Kerrisdale", "Vancouver"), ' +
+      '(15, "98ASKW", "Chevrolet", "Malibu", 2015, "White", 50, "for_rent", "Mid-size", "Kerrisdale", "Vancouver"), ' +
       '(20, "02N23", "BMW", "X6", 2019, "Black", 100, "for_rent", "Standard", "SFU", "Burnaby"), ' +
-      '(21, "9OUHWM", "Chevrolet", "Malibu", 2015, "White", 100, "for_sale", "Mid-size", "Kerrisdale", "Vancouver"), ' +
+      '(21, "9OUHWM", "Chevrolet", "Malibu", 2015, "White", 100, "for_rent", "Mid-size", "Kerrisdale", "Vancouver"), ' +
       '(2020, "IU692C", "Kia", "Optima", 2008, "Black", 120, "for_rent", "Mid-size", "SFU", "Burnaby"), ' +
       '(88, "I23LO8", "Kia", "Optima", 2008, "Black", 110, "for_rent", "Mid-size", "Central Park", "Burnaby"), ' +
       '(77, "91B9JS", "Toyota", "Camry", 2009, "White", 100, "for_rent", "Full-size", "Kerrisdale", "Vancouver"), ' +
