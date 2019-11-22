@@ -2,13 +2,16 @@ import React from 'react';
 import './App.css';
 import ClerkRent from './components/clerk/clerkrent';
 import ClerkReturn from './components/clerk/clerkreturn';
-import DailyReport from './components/reports/dailyReport';
 import CustomerReservation from './components/customer/customerreservation';
 import DbViewAllTables from './components/dbOperations/dbViewAll';
 import DbViewOneTable from './components/dbOperations/dbViewOne';
 import DbUpdate from './components/dbOperations/dbUpdate';
 import DbAdd from './components/dbOperations/dbAdd';
 import DbDelete from './components/dbOperations/dbDelete';
+import RentalReport from './components/reports/rentalReport';
+import RentalBranchReport from './components/reports/rentalBranchReport';
+import ReturnReport from './components/reports/returnReport';
+import ReturnBranchReport from './components/reports/returnBranchReport';
 
 function App() {
   return (
@@ -25,17 +28,29 @@ function App() {
             <div className="flex-element">
               <ClerkRent/>
             </div>
+          </div>
+          <div className = "flex">
             <div className="flex-element">
               <ClerkReturn/>
             </div>
           </div>
-          <div className="flex">
-            <div className="flex-element">
-              <DailyReport/>
+          <div >
+            <h2>Daily Reports</h2>
+            <div>
+              <RentalReport/>
+            </div>
+            <div>
+              <RentalBranchReport/>
+            </div>
+            <div>
+              <ReturnReport/>
+            </div>
+            <div>
+              <ReturnBranchReport/>
             </div>
           </div>
           <div>
-            <h5>DB Operations</h5>
+            <h2>DB Operations</h2>
             <DbViewAllTables/>
             <DbViewOneTable/>
             <DbUpdate/>

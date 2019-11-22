@@ -25,17 +25,34 @@ router.get('/', function(req, res, next) {
 });
 
 // // Daily Rental Report
-// router.post('/daily', function(req, res, next) {
-//   let sql = 'SELECT * FROM rentals r, vehicle v WHERE date(r.fromDate) <= date("now") <= date(r.toDate) GROUP BY v.location';
-//   db().all(sql, function(err, rows) {
-//     console.log(rows);
-//   });
-// });
-
-router.get('/daily', function(req, res, next) {
-  let sql = 'SELECT DISTINCT v.location, v.vtname, COUNT(v.vtname) FROM rentals r, vehicle v WHERE r.vid = v.vid AND date(r.fromDate) <= date("now") <= date(r.toDate) GROUP BY v.location';
+router.post('/daily/info', function(req, res, next) {
+  let sql = 'SELECT DISTINCT v.location, v.vtname ' +
+  'FROM rentals r, vehicle v WHERE r.vid = v.vid AND ' +
+  'date(r.fromDate) <= date("now") <= date(r.toDate) ORDER BY v.location, v.vtname';
   db().all(sql, function(err, rows) {
-    console.log(rows);
+    res.send(rows);
+  });
+});
+
+router.post('/daily/category', function(req, res, next) {
+  let sql = 'SELECT DISTINCT v.vtname, COUNT(*) FROM rentals r, vehicle v WHERE ' +
+  'r.vid = v.vid AND date(r.fromDate) <= date("now") <= date(r.toDate) GROUP BY v.vtname';
+  db().all(sql, function(err, rows) {
+    res.send(rows);
+  });
+});
+
+router.post('/daily/branch', function(req, res, next) {
+  let sql = 'SELECT DISTINCT v.location, COUNT(*) FROM rentals r, vehicle v WHERE ' +
+  'r.vid = v.vid AND date(r.fromDate) <= date("now") <= date(r.toDate) GROUP BY v.location';
+  db().all(sql, function(err, rows) {
+    res.send(rows);
+  });
+});
+
+router.post('/daily/new', function(req, res, next) {
+  let sql = 'SELECT COUNT(*) FROM rentals WHERE date(fromDate) = date("now");'
+  db().all(sql, function(err, rows) {
     res.send(rows);
   });
 });
