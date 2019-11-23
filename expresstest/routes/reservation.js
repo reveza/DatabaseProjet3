@@ -4,23 +4,14 @@ let db = require('../db').getDb;
 /* GET confirmation number. */
 
 router.post('/checkAvailibility', function(req, res, next) {
-  // let sql = 'SELECT COUNT(*) FROM rentals WHERE vid = ' + [req.body.vid]
-  // + ' AND ( (DATE(toDate) <= DATE(' + req.body.toDate + ')'
-  // + ' AND DATE(fromDate) >= DATE(' + req.body.fromDate + '))'
-  // + ' OR (DATE(toDate) <= DATE(' + req.body.toDate + ')'
-  // + ' AND DATE(toDate) >= DATE(' + req.body.fromDate + '))'
-  // + ' OR (DATE(fromDate) <= DATE(' + req.body.toDate + ')'
-  // + ' AND DATE(fromDate) >= DATE(' + req.body.fromDate + ')))'
   let sql = 'SELECT COUNT(*) FROM rentals WHERE vid = ' + [req.body.vid]
   + ' AND ( (toDate <= "' + req.body.toDate + '"'
   + ' AND fromDate >= "' + req.body.fromDate + '")'
   + ' OR (toDate <= "' + req.body.toDate + '"'
   + ' AND toDate >= "' + req.body.fromDate + '")'
   + ' OR (fromDate <= "' + req.body.toDate + '"'
-  + ' AND fromDate >= "' + req.body.fromDate + '"))'
-  console.log(sql);
+  + ' AND fromDate >= "' + req.body.fromDate + '"))';
   db().all(sql, function(err, rows){
-    console.log(rows);
     if (rows[0]["COUNT(*)"] == 0){
       res.send("Available");
     } else{
@@ -40,7 +31,6 @@ router.post('/test', function(req, res,next) {
           } else {
             result['confNo'] = this.lastID;
             res.send(result);
-            return console.log("last row id: " + this.lastID);
           }
         }
   );

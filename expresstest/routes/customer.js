@@ -4,7 +4,7 @@ let db = require('../db').getDb;
 
 router.post('/check', function(req, res, next){
   // let sql = 'EXISTS(SELECT * FROM customer WHERE cellphone = ' + [req.body.cellphone] + ')';
-  let sql = 'SELECT COUNT(*) FROM customer WHERE cellphone = ' + [req.body.cellphone];
+  let sql = 'SELECT COUNT(*) FROM customer WHERE cellphone = "' + req.body.cellphone + '"';
   db().all(sql,
   function(err, rows) {
     if (rows[0]["COUNT(*)"] == 0){
