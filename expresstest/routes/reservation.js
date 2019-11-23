@@ -20,20 +20,19 @@ router.post('/checkAvailibility', function(req, res, next) {
 });
 
 router.post('/test', function(req, res,next) {
-  let result = {confNo: null};
+  let result = {error:null, confNo: null};
   db().run(
     'INSERT INTO reservation (vid, cellphone, fromDate, fromTime, '
         + 'toDate, toTime)' + ' VALUES(?, ?, ?, ?, ?, ?)',
         [req.body.vid, req.body.cellphone, req.body.fromDate, req.body.fromTime,
         req.body.toDate, req.body.toTime], function(err, rows) {
           if (err) {
-            return console.log(err.message);
+            result['error'] = err.message;
           } else {
             result['confNo'] = this.lastID;
-            res.send(result);
           }
-        }
-  );
+          res.send(result);
+        });
 });
 
 router.get('/', function(req, res, next) {

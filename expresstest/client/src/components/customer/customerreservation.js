@@ -59,7 +59,12 @@ class CustomerReservation extends Component {
           if (this.state.carAvailable && this.state.k == 2) {
             axios.post('/reservation/test', data).then(res=>{
               if (res.data.confNo !== null) {
-                this.setState({confNo:res.data.confNo, showTicket:true, closed:false});
+                this.setState({confNo:res.data.confNo, showTicket:true, closed:false, showError:false});
+              } else {
+                this.setState({error:res.data.error, showError:true, closed:false}, () => {
+                  this.forceUpdate();
+                } );
+
               }
             })
           };
@@ -90,7 +95,7 @@ class CustomerReservation extends Component {
                 <h5>Reserve a vehicle</h5>
                 <form onSubmit={this.handleSubmit}>
                     {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>}
-                    {!closed && showTicket &&
+                    {!closed && showTicket && !showError &&
                     <div>Confirmation Number is {this.state.confNo}
                     <button onClick={this.handleClose}>X</button>
                     </div>}
