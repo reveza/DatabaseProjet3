@@ -20,55 +20,58 @@ class CustomerReservation extends Component {
             closed: true,
             customerExists: true,
             k: 0,
-            carAvailable: true,
+            carAvailable: null,
             showTicket:false
         }
         this.handleClose = this.handleClose.bind(this);
     }
 
     handleSubmit = (event) => {
-        this.setState({error: "no err"});
-        event.preventDefault();
-        const data = this.state;
-        axios.post('/reservation/checkAvailibility', data).then(res=>{
-          if (res.data === "Available") {
-            axios.post('/customer/check', data)
-            .then( res => {
-              if (res.data !=="exists" && this.state.k === 0){
-                this.setState({customerExists:false});
-                this.setState({k:1});
-              } else {
-                axios.post('/reservation/test', data)
-                .then(res=> {
-                  if(res.data.confNo !== null) {
-                    this.setState({confNo:res.data.confNo});
-                    this.setState({showTicket: true});
-                    this.setState({closed:false});
-
-                    this.setState({carAvailable:true});
-                  }
-                });
-              }
+      this.state.error = "no err";
+      event.preventDefault();
+      const data = this.state;
+      axios.post('/reservation/checkAvailibility', data).then(res=>{
+        if (res.data == "Available") {
+          this.setState({carAvailable:true}, () => {
+            this.forceUpdate();
+          });
+        } else {
+          this.setState({carAvailable:false}, () => {
+            this.forceUpdate();
+          });
+        };
+        axios.post('/customer/check', data).then( res => {
+          if (res.data == "exists") {
+            this.setState({customerExists:true, k:2}, () => {
+              this.forceUpdate();
             });
-            if (this.state.k === 1 && (!this.state.customerExists) && this.state.carAvailable) {
-              axios.post('/customer/test', data);
-              axios.post('/reservation/test', data)
-              .then(res=> {
-                if(res.data.confNo !== null) {
-                  this.setState({confNo:res.data.confNo});
-                  this.setState({showTicket: true});
-                  this.setState({closed:false});
-                  this.setState({carAvailable:true});
-                }
-              });
-              this.setState({k:0});
-            }
           } else {
-            this.setState({carAvailable:false});
-            this.setState({closed:false});
+            this.setState({customerExists:false, k:1}, () => {
+              this.forceUpdate();
+            });
           }
+          if (this.state.carAvailable && this.state.k == 1 && this.state.address !== null && this.state.dlicense !== null) {
+            axios.post('/customer/test', data);
+            this.setState({k:2}, () => {
+              this.forceUpdate();
+            });
+          };
+          if (this.state.carAvailable && this.state.k == 2) {
+            axios.post('/reservation/test', data).then(res=>{
+              if (res.data.confNo !== null) {
+                this.setState({confNo:res.data.confNo, showTicket:true, closed:false, showError:false});
+              } else {
+                this.setState({error:res.data.error, showError:true, closed:false}, () => {
+                  this.forceUpdate();
+                } );
+
+              }
+            })
+          };
         });
-      }
+      });
+    }
+
 
     handleInputChange = (event) => {
         this.setState({
@@ -92,7 +95,7 @@ class CustomerReservation extends Component {
                 <h5>Reserve a vehicle</h5>
                 <form onSubmit={this.handleSubmit}>
                     {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>}
-                    {!closed && showTicket &&
+                    {!closed && showTicket && !showError &&
                     <div>Confirmation Number is {this.state.confNo}
                     <button onClick={this.handleClose}>X</button>
                     </div>}
@@ -105,9 +108,9 @@ class CustomerReservation extends Component {
 
                     <p><input type='text' placeholder='To Time' name='toTime' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='To Date' name='toDate' onChange={this.handleInputChange}/></p>
-                    {!this.state.carAvailable && <div>
+                    {(this.state.carAvailable == false) && <div>
                       This car is not available. Please choose another vehicle.</div>}
-                    {!closed && !this.state.customerExists && this.state.carAvailable && <div>
+                    {!this.state.customerExists && this.state.carAvailable && <div>
                       Customer does not exist. Please input information
                       <p><input type='text' placeholder='Address' name='address' onChange={this.handleInputChange}/>
                       <input type='text' placeholder='Driving License' name='dlicense' onChange={this.handleInputChange}/></p>
