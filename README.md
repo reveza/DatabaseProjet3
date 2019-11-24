@@ -14,6 +14,9 @@
 9. The web browser will open an instance of the client.
 10. You are now ready to use the app!
 
+### Notes
+You need to have the client and the server to be runnning at the same time to use the app.
+
 # Clerk
 ### Rent a vehicle
 1. Type in a valid vehicle id, otherwise you'll get an error. Ex: `1`
