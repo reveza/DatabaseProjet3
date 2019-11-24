@@ -13,8 +13,42 @@ router.post('/', function(req, res, next) {
     });
 });
 
-router.post('/daily', function(req, res, next) {
-  // db().run();
+// DAILY RETURN REPORT
+
+//The entries are grouped by branch, and within each branch, the entries are grouped by vehicle category.
+router.get('/daily/info', function(req, res, next) {
+  let sql = 'SELECT DISTINCT v.location, v.vtname ' +
+  'FROM returns r, vehicle v WHERE r.vid = v.vid AND ' +
+  'date(r.date) = date("now") ORDER BY v.location, v.vtname';
+  db().all(sql, function(err, rows) {
+    res.send(rows);
+  });
+});
+
+//the number of vehicles returned per category
+router.post('/daily/category', function(req, res, next) {
+  let sql = 'SELECT DISTINCT v.vtname, COUNT(*) FROM returns r, vehicle v WHERE ' +
+  'r.vid = v.vid AND date(r.date) = date("now") GROUP BY v.vtname';
+  db().all(sql, function(err, rows) {
+    res.send(rows);
+  });
+});
+
+//the number of rentals at each branch
+router.post('/daily/branch', function(req, res, next) {
+  let sql = 'SELECT DISTINCT v.location, COUNT(*) FROM returns r, vehicle v WHERE ' +
+  'r.vid = v.vid AND date(r.fromDate) <= date("now") <= date(r.toDate) GROUP BY v.location';
+  db().all(sql, function(err, rows) {
+    res.send(rows);
+  });
+});
+
+//the total number of new rentals across the whole company
+router.post('/daily/new', function(req, res, next) {
+  let sql = 'SELECT COUNT(*) FROM returns WHERE date(fromDate) = date("now");'
+  db().all(sql, function(err, rows) {
+    res.send(rows);
+  });
 });
 
 router.post('/branch', function(req, res, next) {
