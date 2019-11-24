@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
 // DAILY RENTAL REPORT
 
 //The entries are grouped by branch, and within each branch, the entries are grouped by vehicle category.
-router.get('/daily/info', function(req, res, next) {
+router.post('/daily/information', function(req, res, next) {
   let sql = 'SELECT DISTINCT v.location, v.vtname ' +
   'FROM rentals r, vehicle v WHERE r.vid = v.vid AND ' +
   'date(r.fromDate) <= date("now") <= date(r.toDate) ORDER BY v.location, v.vtname';

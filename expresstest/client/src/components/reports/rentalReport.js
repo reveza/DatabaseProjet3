@@ -19,7 +19,7 @@ class RentalReport extends Component {
     }
 
     handleSubmitRental = (event) => {
-        axios.post('/rentals/daily/info')
+        axios.post('/rentals/daily/information')
         .then(res => {
             this.setState({report_info: true});
             this.setState({info: JSON.stringify(res.data)});
