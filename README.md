@@ -21,5 +21,9 @@ Type in the name of the desired table. You can select one from the "List all tab
 4. Press `Add row` button
 5. Validate your result in the `View one table` section to see if the value was added.
 
-### 
+### Delete element from table
+1. Type in the name of the desired table (case-sensitive). Ex: `branch`
+2. Type in the values with the following syntax. Brackets included. Ex: `location="World"`. If the value is TEXT, add double-quotes. If the value is a REAL or INTEGER, no quotes are needed.
+3. Press Delete
+4. 5. Validate your result in the `View one table` section to see if the value was deleted.
 
