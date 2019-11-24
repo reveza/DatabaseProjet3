@@ -5,7 +5,7 @@
 3. Go into the project's directory
 4. Run `npm install` to install all dependencies on the server side
 5. Run `npm start` to start the server on port 4000.
-** If you have a problem with port 4000, go into `./bin/www` at line 15, and change the port manually AND go in `./client/package.json` at line 20 and change the proxy's port value `"proxy": "http://localhost:4000"`.
+6. If you have a problem with port 4000, go into `./bin/www` at line 15, and change the port manually AND go in `./client/package.json` at line 20 and change the proxy's port value `"proxy": "http://localhost:4000"`.
 
 ### Starting the client
 6. Open another terminal tab 
