@@ -35,7 +35,7 @@ class DbDelete extends Component {
                     <div className="flex-element">
                         <p className="text">
                             primary_key = value
-                            <input type='text' placeholder='primaryKey' name='primary_key' onChange={this.handleInputChange}/>
+                            <input type='text' placeholder='primaryKey' name='delete' onChange={this.handleInputChange}/>
                         </p>
                     </div>
                     <div className="flex-element">

@@ -27,11 +27,11 @@ class CustomerReservation extends Component {
     }
 
     handleSubmit = (event) => {
-      this.state.error = "no err";
+      this.setState({error: "no err"});
       event.preventDefault();
       const data = this.state;
       axios.post('/reservation/checkAvailibility', data).then(res=>{
-        if (res.data == "Available") {
+        if (res.data === "Available") {
           this.setState({carAvailable:true}, () => {
             this.forceUpdate();
           });
@@ -41,7 +41,7 @@ class CustomerReservation extends Component {
           });
         };
         axios.post('/customer/check', data).then( res => {
-          if (res.data == "exists") {
+          if (res.data === "exists") {
             this.setState({customerExists:true, k:2}, () => {
               this.forceUpdate();
             });
@@ -50,13 +50,13 @@ class CustomerReservation extends Component {
               this.forceUpdate();
             });
           }
-          if (this.state.carAvailable && this.state.k == 1 && this.state.address !== null && this.state.dlicense !== null) {
+          if (this.state.carAvailable && this.state.k === 1 && this.state.address !== null && this.state.dlicense !== null) {
             axios.post('/customer/test', data);
             this.setState({k:2}, () => {
               this.forceUpdate();
             });
           };
-          if (this.state.carAvailable && this.state.k == 2) {
+          if (this.state.carAvailable && this.state.k === 2) {
             axios.post('/reservation/test', data).then(res=>{
               if (res.data.confNo !== null) {
                 this.setState({confNo:res.data.confNo, showTicket:true, closed:false, showError:false});
@@ -108,7 +108,7 @@ class CustomerReservation extends Component {
 
                     <p><input type='text' placeholder='To Time' name='toTime' onChange={this.handleInputChange}/>
                     <input type='text' placeholder='To Date' name='toDate' onChange={this.handleInputChange}/></p>
-                    {(this.state.carAvailable == false) && <div>
+                    {(this.state.carAvailable === false) && <div>
                       This car is not available. Please choose another vehicle.</div>}
                     {!this.state.customerExists && this.state.carAvailable && <div>
                       Customer does not exist. Please input information
