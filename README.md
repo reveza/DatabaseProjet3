@@ -1,4 +1,16 @@
 # DatabaseProject
+## Daily Reports
+### Rentals
+Press Generate!
+
+### Rentals per branch
+Type in a location, ex: `Kerrisdale` and press Generate.
+
+### Returns
+Is not working currently
+
+### Returns per branch
+Is not working currently
 
 ## DB Operations
 ### List all tables
