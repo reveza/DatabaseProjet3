@@ -50,38 +50,34 @@ class RentalReport extends Component {
     render () {
         return (
             <div>
-                <div className="flex">
-                    <div className="flex-element">
-                        Rentals
-                    </div>
-                    <div className="flex-element">
-                        <button onClick={this.handleSubmitRental}>Generate</button>
-                    </div>
-                    {this.state.report_info && 
-                        <div className="json">
-                            Vehicle information: 
-                            <JSONPretty theme={JSONPrettyMon} id="json-pretty" data={this.state.info}></JSONPretty>
-                        </div>
-                    }
-                    {this.state.report_category &&
-                        <div className="json">
-                            Vehicle rented per category: 
-                            <JSONPretty theme={JSONPrettyMon} id="json-pretty" data={this.state.category}></JSONPretty>
-                        </div>
-                    }
-                    {this.state.report_branch &&
-                        <div className="json">
-                            Number of rentals per branch: 
-                            <JSONPretty theme={JSONPrettyMon} id="json-pretty" data={this.state.branch}></JSONPretty>
-                        </div>
-                    }
-                    {this.state.report_new &&
-                        <div className="json">
-                            New rentals for today:
-                            <JSONPretty theme={JSONPrettyMon} id="json-pretty" data={this.state.new}></JSONPretty>
-                        </div>
-                    }
+                <div className="flex-element">
+                    <p>Rentals</p>
+                    <button onClick={this.handleSubmitRental}>Generate</button>
                 </div>
+                {this.state.report_info && 
+                    <div className="json">
+                        Vehicle information: 
+                        <JSONPretty theme={JSONPrettyMon} id="json-pretty" data={this.state.info}></JSONPretty>
+                    </div>
+                }
+                {this.state.report_category &&
+                    <div className="json">
+                        Vehicle rented per category: 
+                        <JSONPretty theme={JSONPrettyMon} id="json-pretty" data={this.state.category}></JSONPretty>
+                    </div>
+                }
+                {this.state.report_branch &&
+                    <div className="json">
+                        Number of rentals per branch: 
+                        <JSONPretty theme={JSONPrettyMon} id="json-pretty" data={this.state.branch}></JSONPretty>
+                    </div>
+                }
+                {this.state.report_new &&
+                    <div className="json">
+                        New rentals for today:
+                        <JSONPretty theme={JSONPrettyMon} id="json-pretty" data={this.state.new}></JSONPretty>
+                    </div>
+                }
             </div>
         );
         }
