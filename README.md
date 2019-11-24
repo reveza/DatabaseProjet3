@@ -1,3 +1,19 @@
+# SET UP
+1. Make sure you have nodejs installed https://nodejs.org/en/download/
+2. Clone the repo into a file directory
+### Starting the server
+3. Go into the project's directory
+4. Run `npm install` to install all dependencies on the server side
+5. Run `npm start` to start the server on port 4000.
+** If you have a problem with port 4000, go into `./bin/www` at line 15, and change the port manually AND go in `./client/package.json` at line 20 and change the proxy's port value `"proxy": "http://localhost:4000"`.
+
+### Starting the client
+6. Open another terminal tab 
+7. Access the folder `./client`
+8. Run `npm install` to install all the dependencies on the client side.
+9. The web browser will open an instance of the client.
+10. You are now ready to use the app!
+
 # Clerk
 ### Rent a vehicle
 1. Type in a valid vehicle id, otherwise you'll get an error. Ex: `1`
