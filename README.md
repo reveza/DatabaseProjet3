@@ -1,5 +1,5 @@
-# DatabaseProject
-## Daily Reports
+
+# Daily Reports
 ### Rentals
 Press Generate!
 
@@ -12,7 +12,7 @@ Is not working currently
 ### Returns per branch
 Is not working currently
 
-## DB Operations
+# DB Operations
 ### List all tables
 Click on View All to list all tables
 
