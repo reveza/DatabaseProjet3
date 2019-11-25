@@ -8,14 +8,33 @@
 6. If you have a problem with port 4000, go into `./bin/www` at line 15, and change the port manually AND go in `./client/package.json` at line 20 and change the proxy's port value `"proxy": "http://localhost:4000"`.
 
 ### Starting the client
-6. Open another terminal tab 
+6. Open another terminal tab
 7. Access the folder `./client`
 8. Run `npm install` to install all the dependencies on the client side.
+9. Run `npm start`.
 9. The web browser will open an instance of the client.
 10. You are now ready to use the app!
 
 ### Notes
-You need to have the client and the server to be runnning at the same time to use the app.
+You need to have the client and the server to be running at the same time to use the app.
+
+# Customer
+### Make a reservation
+1. Type in your name, cellphone number, vechicleId (e.g, `1`).
+2. Insert time for with the correct format such as `10:20`.
+3. Write dates for the reservation, e.g. `2019-11-27`, or `2019-12-05`.
+4. Press `Make a reservation`.
+5. If this vehicle is not available at that time,
+    you will see `This car is not available. Please choose another vehicle.`.
+6. If the vehicle is available, and there is no such customer with the inserted cellphone,
+    then you need to input additional information such as your address and driving license number.
+7. Then press `Make a reservation` again, and providing that you also used a correct vehicle ID,
+    you will get a confirmation number.
+8. However, if the provided vehicle ID is not valid (meaning the vehicle ID doesn't exist in our database),
+    there will be `Invalid Car ID` message.
+9. If the customer already existed in the system, you do NOT need to input any additional details,
+    just press `Make a reservation` and you will get a confirmation number.
+
 
 # Clerk
 ### Rent a vehicle
@@ -76,4 +95,3 @@ Type in the name of the desired table. You can select one from the "List all tab
 2. Type in the values with the following syntax. Brackets included. Ex: `location="World"`. If the value is TEXT, add double-quotes. If the value is a REAL or INTEGER, no quotes are needed.
 3. Press Delete
 4. Validate your result in the `View one table` section to see if the value was deleted.
-

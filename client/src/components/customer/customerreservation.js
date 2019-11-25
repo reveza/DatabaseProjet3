@@ -94,7 +94,7 @@ class CustomerReservation extends Component {
             <div>
                 <h5>Reserve a vehicle</h5>
                 <form onSubmit={this.handleSubmit}>
-                    {!closed && showError && <div>{this.state.error} <button onClick={this.handleClose}>X</button></div>}
+                    {!closed && showError && <div>Invalid Car ID <button onClick={this.handleClose}>X</button></div>}
                     {!closed && showTicket && !showError &&
                     <div>Confirmation Number is {this.state.confNo}
                     <button onClick={this.handleClose}>X</button>
