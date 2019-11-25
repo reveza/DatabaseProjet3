@@ -3,15 +3,15 @@
 2. Clone the repo into a file directory
 ### Starting the server
 3. Go into the project's directory
-4. Run `npm install` to install all dependencies on the server side
+4. Run `npm install` to install all dependencies on the server side. Then `npm rebuild`.
 5. Run `npm start` to start the server on port 4000.
 6. If you have a problem with port 4000, go into `./bin/www` at line 15, and change the port manually AND go in `./client/package.json` at line 20 and change the proxy's port value `"proxy": "http://localhost:4000"`.
 
 ### Starting the client
 6. Open another terminal tab
 7. Access the folder `./client`
-8. Run `npm install` to install all the dependencies on the client side.
-9. Run `npm start`.
+8. Run `npm install` to install all the dependencies on the client side. 
+9. Run `npm start`. If it still doesn't work, run`npm rebuild` before `npm start` again.
 9. The web browser will open an instance of the client.
 10. You are now ready to use the app!
 
