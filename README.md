@@ -19,6 +19,14 @@
 You need to have the client and the server to be running at the same time to use the app.
 
 # Customer
+### View available vehicles
+1. Provide any subset of {car type, location, time interval} to view available vehicles.
+2. Time interval, if used, should include both start and end dates, and should be inserted in
+    in proper date format `2019-11-11`.
+   If not used, all vehicles are returned sorted by location.
+3. Click on `View number of available vehicles` button to see number of available vehicles.
+4. Click on the `View available vehicles here` button to a list of the details of each available vehicle. 
+
 ### Make a reservation
 1. Type in your name, cellphone number, vechicleId (e.g, `1`).
 2. Insert time for with the correct format such as `10:20`.
